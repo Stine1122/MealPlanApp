@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { type InputProps } from "../../../types/mealplan"
+import { type InputProps } from "../../types/mealplan"
 
 function Input({num, setNum} : InputProps) {
     const [input, setInput] = useState("")

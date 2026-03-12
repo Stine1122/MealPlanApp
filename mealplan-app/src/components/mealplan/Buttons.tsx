@@ -1,4 +1,4 @@
-import { type GenerateResponseProp } from "../../../types/mealplan"
+import { type GenerateResponseProp } from "../../types/mealplan"
 
 function GenerateButtons({generate_response} : GenerateResponseProp ) {
     return (

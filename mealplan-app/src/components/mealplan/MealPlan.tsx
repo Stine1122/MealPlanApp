@@ -3,8 +3,8 @@ import Recipe from "./Recipe"
 import { type Recipe as RecipeType } from "../../types/recipe"
 import { useStoredRecipes } from "../../hooks/useStoredRecipes"
 import { useStoredPeople } from "../../hooks/useStoredPeople"
-import Input from "./small components/Input"
-import GenerateButtons from "./small components/Buttons"
+import Input from "./Input"
+import GenerateButtons from "./Buttons"
 
 function MealPlan() {
     const [input, setInput] = useState("")

@@ -6,16 +6,16 @@ function App() {
         <div className="overflow-auto flex flex-row px-32 self-center">
 
             <div className="overflow-auto flex flex-col gap-3 w-1/4">
-                <Fridge type="fridge"/>
-            </div> 
+                <Fridge type="fridge" />
+            </div>
 
             <MealPlan />
 
             <div className="overflow-auto flex flex-col gap-3 w-1/4">
-                <Fridge type="freezer"/>
-            </div> 
+                <Fridge type="freezer" />
+            </div>
 
-        </div> 
+        </div>
     )
 }
 

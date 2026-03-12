@@ -1,4 +1,4 @@
-import { type ListProps } from "../../../types/fridge"
+import { type ListProps } from "../../types/fridge"
 
 function List({ list, setList }: ListProps) {
 

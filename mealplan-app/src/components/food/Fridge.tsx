@@ -1,5 +1,5 @@
-import Input from './small components/Input'
-import List from './small components/List'
+import Input from './Input'
+import List from './List'
 import { type FridgeProps } from "../../types/fridge"
 import { useStoredList } from "../../hooks/useStoredList"
 
