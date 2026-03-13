@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { type ListProps } from "../../types/fridge"
+import { type ListProps } from "../../types/food"
 
 function handleInput(input : string, 
                      setInput: React.Dispatch<React.SetStateAction<string>>,

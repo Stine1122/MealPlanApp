@@ -1,12 +1,12 @@
 import Input from './Input'
 import List from './List'
-import { type FridgeProps } from "../../types/fridge"
-import { useStoredList } from "../../hooks/useStoredList"
+import { type FridgeProps } from "../../types/food"
+import { useLocalStorage } from "../../storage/useLocalStorage"
 
 function Fridge({ type }: FridgeProps) {
     const title = type === "fridge" ? "Køleskab" : "Fryser"
     const storageKey = `${type}-items`
-    const { list, setList } = useStoredList(storageKey)
+    const [list, setList] = useLocalStorage<string[]>(storageKey,[])
 
     return (
         <div className="flex flex-col">

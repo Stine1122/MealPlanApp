@@ -13,3 +13,13 @@ export type ResponseProps = {
     response: RecipeType[] | null
     setResponse: React.Dispatch<React.SetStateAction<RecipeType[] | null>>
 }
+
+export type ErrorMessageProps = {
+    error: string
+    setError: React.Dispatch<React.SetStateAction<string>>
+}
+
+export type StepProps = {
+    step: number
+    setStep: React.Dispatch<React.SetStateAction<number>>
+}

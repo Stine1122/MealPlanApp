@@ -1,6 +1,7 @@
 import { type GenerateResponseProp } from "../../types/mealplan"
+import { type ResponseProps } from "../../types/mealplan"
 
-function GenerateButtons({generate_response} : GenerateResponseProp ) {
+export function GenerateButtons({generate_response} : GenerateResponseProp ) {
     return (
         <div className="flex flex-row gap-3 self-center">
             <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600 
@@ -17,17 +18,17 @@ function GenerateButtons({generate_response} : GenerateResponseProp ) {
     )
 }
 
-// function DeleteButton({ setResponse } : ResponseProps) {
-//     <button
-//         className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 
-//         p-2 rounded-2xl"
-//         onClick={() => {
-//             setResponse(null)
-//             localStorage.removeItem("mealplan-recipe")
-//         }}
-//     >
-//         Ryd madplan
-//     </button>
-// }
-
-export default GenerateButtons
+export function DeleteButton({ setResponse } : ResponseProps) {
+    return (
+        <button
+            className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 
+            p-2 rounded-2xl"
+            onClick={() => {
+                setResponse(null)
+                localStorage.removeItem("mealplan-recipe")
+            }}
+        >
+            Ryd madplan
+        </button>
+    )
+}

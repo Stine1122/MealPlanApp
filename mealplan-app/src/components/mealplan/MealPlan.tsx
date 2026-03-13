@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import Recipe from "./Recipe"
 import { type Recipe as RecipeType } from "../../types/recipe"
-import { useStoredRecipes } from "../../hooks/useStoredRecipes"
-import { useStoredPeople } from "../../hooks/useStoredPeople"
+import { useLocalStorage } from "../../storage/useLocalStorage"
 import Input from "./Input"
-import GenerateButtons from "./Buttons"
+import { GenerateButtons, DeleteButton } from "./Buttons"
+import ErrorMessage from "./ErrorMessage"
+import Loading from './Loading'
 
 function MealPlan() {
     const [input, setInput] = useState("")
     const [error, setError] = useState("")
-    const [visibleRecipes, setVisibleRecipes] = useState<RecipeType[]>([])
     const [loading, setLoading] = useState(false)
     const [step, setStep] = useState(0)
-
-    const { response, setResponse } = useStoredRecipes(setVisibleRecipes)
-    const { num, setNum } = useStoredPeople()
+    const [response, setResponse] = useLocalStorage<RecipeType[] | null>("mealplan-recipe", null)
+    const [visibleRecipes, setVisibleRecipes] = useState<RecipeType[]>([])
+    const [num, setNum] = useLocalStorage<number | "">("number-people", "")
 
     const generate_response = async (mode: "eachday" | "twoday") => {
         if (num === "") {
@@ -77,41 +77,15 @@ function MealPlan() {
             <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12">
                 <Input num={num} setNum={setNum}/>
                 <GenerateButtons generate_response={generate_response}/>
-
-                {error && (
-                    <p className="text-red-600 text-center font-headline font-semibold">{error}</p>
-                )}
-
-                {loading && (
-                    <p className="text-2xl font-headline text-center text-olive-800 mt-4">
-                        <p className={`${step === 0 ? "animate-pulse" : ""}`}>
-                            {step >= 1 ? "✔" : "⏳"} Analyserer ingredienser
-                        </p>
-                        <p className={`${step === 1 ? "animate-pulse" : ""}`}>
-                            {step <= 0 ? "" : ` ${step >= 2 ? "✔" : "⏳"} Finder opskrifter`}
-                        </p>
-                        <p className={`${step === 2 ? "animate-pulse" : ""}`}>
-                            {step <= 1 ? "" : ` ${step >= 3 ? "✔" : "⏳"} Genererer madplan`}
-                        </p>
-                    </p>
-                )}
+                <ErrorMessage error={error} setError={setError}/>
+                {loading && (<Loading step={step} setStep={setStep} />)}
 
                 {response !== null && (
                     <>
                         {visibleRecipes.map((recipe, index) => (
                             <Recipe key={index} response={recipe} />
                         ))}
-
-                        <button
-                            className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 
-                            p-2 rounded-2xl"
-                            onClick={() => {
-                                setResponse(null)
-                                localStorage.removeItem("mealplan-recipe")
-                            }}
-                        >
-                            Ryd madplan
-                        </button>
+                        <DeleteButton response={null} setResponse={setResponse}/>
                     </>
                 )}
             </div>
