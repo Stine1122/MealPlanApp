@@ -6,6 +6,7 @@ import Recipe from "./Recipe"
 import Input from "./Input"
 import ErrorMessage from "./ErrorMessage"
 import Loading from './Loading'
+import CheckBoxes from './CheckBoxes'
 import { useLocalStorage } from "../../storage/useLocalStorage"
 import { GenerateButtons, DeleteButton } from "./Buttons"
 
@@ -82,9 +83,9 @@ function MealPlan() {
             <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12">
 
                 <Input num={num} setNum={setNum}/>
+                <CheckBoxes/>
                 <GenerateButtons generate_response={generate_response}/>
-                <ErrorMessage error={error} setError={setError}/>
-
+                {error && (<ErrorMessage error={error} setError={setError}/>)}
                 {loading && (<Loading step={step} setStep={setStep} />)}
 
                 {response !== null && (
