@@ -1,20 +1,24 @@
 import { useState } from 'react'
-import Recipe from "./Recipe"
+
 import { type Recipe as RecipeType } from "../../types/recipe"
-import { useLocalStorage } from "../../storage/useLocalStorage"
+
+import Recipe from "./Recipe"
 import Input from "./Input"
-import { GenerateButtons, DeleteButton } from "./Buttons"
 import ErrorMessage from "./ErrorMessage"
 import Loading from './Loading'
+import { useLocalStorage } from "../../storage/useLocalStorage"
+import { GenerateButtons, DeleteButton } from "./Buttons"
 
 function MealPlan() {
     const [input, setInput] = useState("")
+    const [num, setNum] = useLocalStorage<number | "">("number-people", "")
     const [error, setError] = useState("")
+
     const [loading, setLoading] = useState(false)
     const [step, setStep] = useState(0)
+
     const [response, setResponse] = useLocalStorage<RecipeType[] | null>("mealplan-recipe", null)
-    const [visibleRecipes, setVisibleRecipes] = useState<RecipeType[]>([])
-    const [num, setNum] = useLocalStorage<number | "">("number-people", "")
+    const [visibleRecipes, setVisibleRecipes] = useState<RecipeType[]>(response ?? [])
 
     const generate_response = async (mode: "eachday" | "twoday") => {
         if (num === "") {
@@ -22,13 +26,14 @@ function MealPlan() {
             return
         }
         setError("")
-        setResponse(null)
-        setVisibleRecipes([])
 
         setLoading(true)
         setStep(0)
         setTimeout(() => setStep(1), 5000)
         setTimeout(() => setStep(2), 10000)
+
+        setResponse(null)
+        setVisibleRecipes([])
 
         try {
             const fridgeItems = JSON.parse(localStorage.getItem("fridge-items") || "[]");
@@ -50,10 +55,8 @@ function MealPlan() {
                 throw new Error(text)
             }
             const recipes = await r.json();
-            // console.log(recipe);
             setResponse(recipes);
 
-            // reveal recipes one-by-one
             recipes.forEach((recipe: RecipeType, index: number) => {
                 setTimeout(() => {
                     setVisibleRecipes(prev => [...prev, recipe])
@@ -71,13 +74,17 @@ function MealPlan() {
 
     return (
         <div className="overflow-auto flex flex-col w-1/2">
+
             <h1 className="text-center text-5xl mt-10 font-headline text-brown-900">
                 Din ugentlige madplan
             </h1>
+
             <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12">
+
                 <Input num={num} setNum={setNum}/>
                 <GenerateButtons generate_response={generate_response}/>
                 <ErrorMessage error={error} setError={setError}/>
+
                 {loading && (<Loading step={step} setStep={setStep} />)}
 
                 {response !== null && (
@@ -89,6 +96,7 @@ function MealPlan() {
                     </>
                 )}
             </div>
+
         </div>
     )
 }

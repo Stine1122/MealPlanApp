@@ -23,7 +23,7 @@ export default function Recipe({ response }: RecipeProps) {
     <div className="w-full rounded-lg self-center animate-fade-in">
       <button
         onClick={() => setOpen(!open)}
-        className={`border border-black cursor-pointer flex w-full items-center justify-between p-4 text-amber-50 rounded-t-lg transition-colors
+        className={`border border-black cursor-pointer flex flex-row w-full items-center justify-between p-4 text-amber-50 rounded-t-lg transition-colors
         ${open ? "bg-olive-700 rounded-t-lg" : "bg-olive-600/90 hover:bg-olive-700 rounded-lg"}`}
       >
         <p className="text-lg font-semibold font-headline">{response.day}</p>

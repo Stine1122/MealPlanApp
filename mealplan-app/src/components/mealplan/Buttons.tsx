@@ -4,16 +4,19 @@ import { type ResponseProps } from "../../types/mealplan"
 export function GenerateButtons({generate_response} : GenerateResponseProp ) {
     return (
         <div className="flex flex-row gap-3 self-center">
+
             <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600 
                             text-amber-50/80 font-headline p-2 rounded-2xl" 
                     onClick={() => generate_response("eachday")}>
                 Generer opskrifter til hver dag
             </button>
+
             <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600
                             text-amber-50/80 font-headline p-2 rounded-2xl" 
                     onClick={() => generate_response("twoday")}>
                 Generer opskrifter til hver anden dag
             </button>
+            
         </div>
     )
 }

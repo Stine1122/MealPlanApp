@@ -6,3 +6,8 @@ export type ListProps = {
   list: string[]
   setList: React.Dispatch<React.SetStateAction<string[]>>
 }
+
+export type InputProps = {
+  input: string
+  setInput: React.Dispatch<React.SetStateAction<string>>
+}
