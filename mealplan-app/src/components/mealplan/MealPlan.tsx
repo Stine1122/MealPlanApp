@@ -21,6 +21,8 @@ function MealPlan() {
     const [response, setResponse] = useLocalStorage<RecipeType[] | null>("mealplan-recipe", null)
     const [visibleRecipes, setVisibleRecipes] = useState<RecipeType[]>(response ?? [])
 
+    const [allergies, setAllergies] = useLocalStorage<string[]>("allergy-names", [])
+
     const generate_response = async (mode: "eachday" | "twoday") => {
         if (num === "") {
             setError("Du skal vælge antal personer før du kan generere en madplan.")
@@ -48,6 +50,7 @@ function MealPlan() {
                     persons: num,
                     fridge: fridgeItems,
                     freezer: freezerItems,
+                    allergies: allergies,
                     mode: mode
                 })
             });
@@ -83,7 +86,7 @@ function MealPlan() {
             <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12">
 
                 <Input num={num} setNum={setNum}/>
-                <CheckBoxes/>
+                <CheckBoxes allergies={allergies} setAllergies={setAllergies}/>
                 <GenerateButtons generate_response={generate_response}/>
                 {error && (<ErrorMessage error={error} setError={setError}/>)}
                 {loading && (<Loading step={step} setStep={setStep} />)}

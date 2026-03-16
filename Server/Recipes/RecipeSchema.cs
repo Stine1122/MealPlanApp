@@ -16,6 +16,15 @@ public static class RecipeSchema
 
                 ["recipe_name"] = new Schema { Type = "string" },
 
+                ["allergies"] = new Schema 
+                { 
+                    Type = "array",
+                    Items = new Schema
+                    {
+                        Type = "string"
+                    }
+                },
+
                 ["servings"] = new Schema { Type = "integer" },
 
                 ["prep_time_minutes"] = new Schema { Type = "integer" },

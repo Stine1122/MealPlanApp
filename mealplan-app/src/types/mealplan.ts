@@ -26,4 +26,11 @@ export type StepProps = {
 
 export type TheBoxProps = {
   name: string
+  checked: boolean
+  onChange: (name: string, checked: boolean) => void
+}
+
+export type allergiesProps = {
+    allergies: string[]
+    setAllergies: React.Dispatch<React.SetStateAction<string[]>>
 }

@@ -20,8 +20,8 @@ public class MealPlanService
         var schema = RecipeSchema.Value;
 
         var prompt = request.Mode == "twoday"
-        ? MealPlanPrompts.TwoDay(request.Fridge, request.Freezer, request.Prompt, request.Persons)
-        : MealPlanPrompts.EachDay(request.Fridge, request.Freezer, request.Prompt, request.Persons);
+        ? MealPlanPrompts.TwoDay(request.Fridge, request.Freezer, request.Prompt, request.Persons, request.Allergies)
+        : MealPlanPrompts.EachDay(request.Fridge, request.Freezer, request.Prompt, request.Persons, request.Allergies);
 
         var response = await _client.Models.GenerateContentAsync(
             model: "models/gemini-3-flash-preview",
@@ -49,5 +49,6 @@ public record GenerateContentRequest(
     int Persons,
     List<string> Fridge,
     List<string> Freezer,
+    List<string> Allergies,
     string Mode
 );

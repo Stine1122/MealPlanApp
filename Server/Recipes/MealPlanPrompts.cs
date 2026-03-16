@@ -2,13 +2,24 @@ namespace MyApp.Prompts;
 
 public static class MealPlanPrompts
 {
-    public static string GeneralPrompt(List<string> fridge, List<string> freezer, string extraPrompt, int days)
+
+    public static string RulesPrompt()
+    {
+        return """
+        VIGTIGSTE REGLER (SKAL ALTID OVERHOLDES):
+        1. Allergier er af absolut højeste prioritet
+        2. Nedenstående ønsker fra brugeren har absolut højeste prioritet.
+        3. Hvis der opstår konflikt mellem allergier, brugerens ønsker og andre krav,
+        skal allergier altid vælges.
+        """;
+    }
+
+    public static string GeneralPrompt(List<string> fridge, List<string> freezer, string extraPrompt, int days, List<string> allergies)
     {
         return $"""
-        VIGTIGSTE REGLER (SKAL ALTID OVERHOLDES):
-        1. Nedenstående ønsker fra brugeren har absolut højeste prioritet.
-        2. Hvis der opstår konflikt mellem brugerens ønsker og andre krav,
-        skal brugerens ønsker altid vælges.
+
+        ALLERGIER:
+        {string.Join(", ", allergies)}
 
         BRUGERENS ØNSKER:
         {extraPrompt}
@@ -29,12 +40,15 @@ public static class MealPlanPrompts
 
         OUTPUT FORMAT:
         Returner KUN en JSON-array med {days} objekter der matcher schema.
+
         """;
     }
 
-    public static string EachDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons)
+    public static string EachDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies)
     {
         return $"""
+        {RulesPrompt()}
+
         Generer en ugentlig madplan med præcis 7 opskrifter.
         
         Brug disse dage i madplanen:
@@ -42,23 +56,28 @@ public static class MealPlanPrompts
 
         Hver dag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, extraPrompt, 7)}
+        {GeneralPrompt(fridge, freezer, extraPrompt, 7, allergies)}
         """;
     }
 
-    public static string TwoDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons)
+    public static string TwoDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies)
     {
         return $"""
+        {RulesPrompt()}
+
         Generer en ugentlig madplan med præcis 4 opskrifter.
 
-        Brug disse dagen i madplanen:
-        Mandag, Onsdag, Fredag, Søndag
+        Brug disse dage i madplanen:
+        Mandag, Onsdag, Fredag, Søndag.
+
+        Tilføj IKKE disse dage i madplanen:
+        Tirsdag, Torsdag og Lørdag.
 
         Opskrifterne til mandag, onsdag og fredag skal være en opskrift til {persons*2} personer.
 
         Opskriften til søndag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, extraPrompt, 4)}
+        {GeneralPrompt(fridge, freezer, extraPrompt, 4, allergies)}
         """;
     }
 }

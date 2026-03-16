@@ -17,6 +17,9 @@ public class Recipe
     [JsonPropertyName("recipe_name")]
     public required string RecipeName { get; set; }
 
+    [JsonPropertyName("allergies")]
+    public string[]? Allergies { get; set; }
+
     [JsonPropertyName("servings")]
     public required int Servings { get; set; }
 

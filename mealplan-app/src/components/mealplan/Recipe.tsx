@@ -40,17 +40,21 @@ export default function Recipe({ response }: RecipeProps) {
           <div>
             <p className="font-bold text-xl">{response.recipe_name}</p>
 
-              <p>Til {response.servings} personer</p>
+            {response.allergies !== null && (
+              <p className="italic">Allergier: {response.allergies.join(", ")}</p>
+            )}
 
-              {response.prep_time_minutes !== null && (
-                <p>Forberedelsestid: {formatTime(response.prep_time_minutes)}</p>
-              )}
-              {response.bake_time_minutes !== null && (
-                <p>Tilberedningstid: {formatTime(response.bake_time_minutes)}</p>
-              )}
-              {response.total_time_minutes !== null && (
-                <p>Total tid: {formatTime(response.total_time_minutes)}</p>
-              )}
+            <p className="font-semibold" >Til {response.servings} personer</p>
+
+            {response.prep_time_minutes !== null && (
+              <p>Forberedelsestid: {formatTime(response.prep_time_minutes)}</p>
+            )}
+            {response.bake_time_minutes !== null && (
+              <p>Tilberedningstid: {formatTime(response.bake_time_minutes)}</p>
+            )}
+            {response.total_time_minutes !== null && (
+              <p>Total tid: {formatTime(response.total_time_minutes)}</p>
+            )}
 
             <p className="font-semibold mt-2">Ingredienser:</p>
 
