@@ -37,4 +37,7 @@ public class Recipe
 
     [JsonPropertyName("instructions")]
     public required List<string> Instructions { get; set; }
+
+    [JsonPropertyName("shoppinglist")]
+    public required List<Ingredient> ShoppingList { get; set; }
 }

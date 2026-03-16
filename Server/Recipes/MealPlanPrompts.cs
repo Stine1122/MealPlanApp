@@ -8,7 +8,7 @@ public static class MealPlanPrompts
         return """
         VIGTIGSTE REGLER (SKAL ALTID OVERHOLDES):
         1. Allergier er af absolut højeste prioritet
-        2. Nedenstående ønsker fra brugeren har absolut højeste prioritet.
+        2. Nedenstående ønsker fra brugeren har absolut andenhøjeste prioritet.
         3. Hvis der opstår konflikt mellem allergier, brugerens ønsker og andre krav,
         skal allergier altid vælges.
         """;
@@ -33,10 +33,17 @@ public static class MealPlanPrompts
 
         Hvis en ingrediens fra køleskab eller fryser allerede er brugt i en tidligere opskrift, må den ikke bruges igen i resten af madplanen.
 
-        Andre ingredienser må meget gerne også tilføjes hvis det passer godt ind i opskrifterne.
+        Andre ingredienser må meget gerne også tilføjes hvis det passer godt ind i opskrifterne. Disse ingredienser må meget gerne genbruges.
 
         TIDSOPLYSNINGER:
         Husk at tilføje både forberedelsestid, tilberedningstid (som skal under bake_time_minutes i schema) og totale tid.
+
+        INDKØBSLISTE OPLYSNINGER:
+        Tilføj de ingredienser som du ikke kunne finde i køleskab eller fryser til shoppinglist i schema. Hvis en ingrediens allerede er på indkøbslisten i et andet objekt i json-arrayet, må den ikke tilføjes igen.
+
+        SPECIFIKKE INGREDIENSER:
+        Ingredienser som salt, peber, olie og andre krydderier må meget gerne bruges igen, og skal IKKE på Indkøbslisten.
+
 
         OUTPUT FORMAT:
         Returner KUN en JSON-array med {days} objekter der matcher schema.

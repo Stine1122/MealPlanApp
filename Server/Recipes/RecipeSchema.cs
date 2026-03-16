@@ -55,6 +55,21 @@ public static class RecipeSchema
                     {
                         Type = "string"
                     }
+                },
+
+                ["shoppinglist"] = new Schema
+                {
+                    Type = "array",
+                    Items = new Schema
+                    {
+                        Type = "object",
+                        Properties = new Dictionary<string, Schema>
+                        {
+                            ["name"] = new Schema { Type = "string" },
+                            ["quantity"] = new Schema { Type = "string" }
+                        },
+                        Required = new List<string> { "name", "quantity" }
+                    }
                 }
             },
             Required = new List<string>
@@ -63,7 +78,8 @@ public static class RecipeSchema
                 "recipe_name",
                 "servings",
                 "ingredients",
-                "instructions"
+                "instructions",
+                "shoppinglist"
             }
         }
     };

@@ -12,7 +12,7 @@ function List({ list, setList }: ListProps) {
             {list.map((item) => (
                 <div className="flex flex-row self-center" key={item}>
 
-                    <li className="self-center rounded p-1 font-items" key={item}>{item}</li>
+                    <li className="self-center text-center rounded p-1 font-items" key={item}>{item}</li>
 
                     <button className="text-red-800 self-center ml-2 hover:bg-red-400 cursor-pointer p-2 m-1 rounded-4xl" 
                             onClick={() => setList(list.filter(i => i !== item))}>

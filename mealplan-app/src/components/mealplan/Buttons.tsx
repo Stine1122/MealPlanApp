@@ -21,7 +21,7 @@ export function GenerateButtons({generate_response} : GenerateResponseProp ) {
     )
 }
 
-export function DeleteButton({ setResponse } : ResponseProps) {
+export function DeleteButtonMealPlan({ setResponse } : ResponseProps) {
     return (
         <button
             className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 

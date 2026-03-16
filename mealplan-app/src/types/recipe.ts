@@ -13,4 +13,13 @@ export type Recipe = {
   total_time_minutes: number | null
   ingredients: Ingredient[]
   instructions: string[]
+  shoppinglist: Ingredient[]
+}
+
+export type RecipeProps = {
+  response: Recipe
+}
+
+export type ShoppingListProps = {
+  shoppinglist: Ingredient[]
 }

@@ -1,14 +1,13 @@
 import { useState } from 'react'
-
 import { type Recipe as RecipeType } from "../../types/recipe"
-
 import Recipe from "./Recipe"
 import Input from "./Input"
-import ErrorMessage from "./ErrorMessage"
+import ErrorMessage from "./ErrorMessages"
 import Loading from './Loading'
 import CheckBoxes from './CheckBoxes'
+import ShoppingList from './ShoppingList'
 import { useLocalStorage } from "../../storage/useLocalStorage"
-import { GenerateButtons, DeleteButton } from "./Buttons"
+import { GenerateButtons, DeleteButtonMealPlan } from "./Buttons"
 
 function MealPlan() {
     const [input, setInput] = useState("")
@@ -41,6 +40,7 @@ function MealPlan() {
         try {
             const fridgeItems = JSON.parse(localStorage.getItem("fridge-items") || "[]");
             const freezerItems = JSON.parse(localStorage.getItem("freezer-items") || "[]");
+            const shoppinglist = JSON.parse(localStorage.getItem("shopping-list") || "[]");
 
             const r = await fetch("http://localhost:5043/generatecontent", {        
                 method: "POST",       
@@ -51,6 +51,7 @@ function MealPlan() {
                     fridge: fridgeItems,
                     freezer: freezerItems,
                     allergies: allergies,
+                    shoppinglist: shoppinglist,
                     mode: mode
                 })
             });
@@ -60,6 +61,8 @@ function MealPlan() {
             }
             const recipes = await r.json();
             setResponse(recipes);
+
+            console.log(recipes);
 
             recipes.forEach((recipe: RecipeType, index: number) => {
                 setTimeout(() => {
@@ -76,7 +79,10 @@ function MealPlan() {
         }
     }
 
+    const allShoppingItems = visibleRecipes.flatMap(recipe => recipe.shoppinglist)
+
     return (
+        <>
         <div className="overflow-auto flex flex-col w-1/2">
 
             <h1 className="text-center text-5xl mt-10 font-headline text-brown-900">
@@ -96,12 +102,17 @@ function MealPlan() {
                         {visibleRecipes.map((recipe, index) => (
                             <Recipe key={index} response={recipe} />
                         ))}
-                        <DeleteButton response={null} setResponse={setResponse}/>
+                        <DeleteButtonMealPlan response={null} setResponse={setResponse}/>
                     </>
                 )}
             </div>
 
         </div>
+
+        <div className="overflow-auto flex flex-col w-1/4 mb-15 mt-13 gap-10">
+            <ShoppingList shoppinglist={allShoppingItems}/>
+        </div>
+        </>
     )
 }
 

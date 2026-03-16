@@ -1,10 +1,6 @@
-import { type Recipe as RecipeType } from "../../types/recipe"
+import { type RecipeProps } from "../../types/recipe"
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-
-type RecipeProps = {
-  response: RecipeType
-}
 
 function formatTime(minutes: number): string {
   if (minutes < 60) return `${minutes} minutter`;
