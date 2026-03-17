@@ -16,7 +16,7 @@ function TheBox({ name, checked, onChange }: TheBoxProps) {
     )
 }
 
-const OPTIONS = ["Glutenfri", "Laktosefri", "Mælkefri", "Nøddefri"] as const
+const OPTIONS = ["Glutenfri", "Laktosefri", "Mælkefri", "Nøddefri", "Vegetarisk", "Vegansk"] as const
 
 function CheckBoxes({ allergies, setAllergies }: allergiesProps) {
     const handleChange = (name: string, value: boolean) => {

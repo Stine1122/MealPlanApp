@@ -37,7 +37,7 @@ export default function Recipe({ response }: RecipeProps) {
             <p className="font-bold text-xl">{response.recipe_name}</p>
 
             {response.allergies !== null && (
-              <p className="italic">Allergier: {response.allergies.join(", ")}</p>
+              <p className="italic">{response.allergies.join(", ")}</p>
             )}
 
             <p className="font-semibold" >Til {response.servings} personer</p>

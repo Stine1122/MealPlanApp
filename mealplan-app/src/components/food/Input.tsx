@@ -29,7 +29,7 @@ function handleInput({input, setInput} : InputProps, { setList }: ListProps, num
 function Input({ list, setList }: ListProps) {
     const [input, setInput] = useState("")
     const [num, setNum] = useState<number| "">("")
-    const [opt, setOpt] = useState("g")
+    const [opt, setOpt] = useState("")
     const [error, setError] = useState("")
 
     return (
