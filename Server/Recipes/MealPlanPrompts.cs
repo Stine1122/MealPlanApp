@@ -14,7 +14,7 @@ public static class MealPlanPrompts
         """;
     }
 
-    public static string GeneralPrompt(List<string> fridge, List<string> freezer, string extraPrompt, int days, List<string> allergies)
+    public static string GeneralPrompt(List<string> fridge, List<string> freezer, string extraPrompt, int days, List<string> allergies, List<string> shoppinglist)
     {
         return $"""
 
@@ -40,6 +40,8 @@ public static class MealPlanPrompts
 
         INDKØBSLISTE OPLYSNINGER:
         Tilføj de ingredienser som du ikke kunne finde i køleskab eller fryser til shoppinglist i schema. Hvis en ingrediens allerede er på indkøbslisten i et andet objekt i json-arrayet, må den ikke tilføjes igen.
+        Disse ingredienser er allerede på indkøbslisten:
+        {string.Join(", ", shoppinglist)}
 
         SPECIFIKKE INGREDIENSER:
         Ingredienser som salt, peber, olie og andre krydderier må meget gerne bruges igen, og skal IKKE på Indkøbslisten.
@@ -51,7 +53,7 @@ public static class MealPlanPrompts
         """;
     }
 
-    public static string EachDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies)
+    public static string EachDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
     {
         return $"""
         {RulesPrompt()}
@@ -63,11 +65,11 @@ public static class MealPlanPrompts
 
         Hver dag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, extraPrompt, 7, allergies)}
+        {GeneralPrompt(fridge, freezer, extraPrompt, 7, allergies, shoppinglist)}
         """;
     }
 
-    public static string TwoDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies)
+    public static string TwoDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
     {
         return $"""
         {RulesPrompt()}
@@ -84,7 +86,7 @@ public static class MealPlanPrompts
 
         Opskriften til søndag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, extraPrompt, 4, allergies)}
+        {GeneralPrompt(fridge, freezer, extraPrompt, 4, allergies, shoppinglist)}
         """;
     }
 }

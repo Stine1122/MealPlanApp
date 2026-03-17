@@ -9,7 +9,8 @@ function ShoppingList({ shoppinglist }: ShoppingListProps) {
     const [list, setList] = useLocalStorage<string[]>("shopping-list",[])
 
     useEffect(() => {
-        const newItems = shoppinglist.map(item => item.quantity + ", " + item.name)
+        if (shoppinglist.length === 0) return
+        const newItems = shoppinglist.map(item => item.quantity + " " + item.name)
         setList(prev => [...new Set([...prev, ...newItems])])
     }, [setList, shoppinglist])
 

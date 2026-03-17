@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { type Recipe as RecipeType } from "../../types/recipe"
 import Recipe from "./Recipe"
 import Input from "./Input"
@@ -79,7 +79,10 @@ function MealPlan() {
         }
     }
 
-    const allShoppingItems = visibleRecipes.flatMap(recipe => recipe.shoppinglist)
+    const allShoppingItems = useMemo(
+        () => visibleRecipes.flatMap(recipe => recipe.shoppinglist),
+        [visibleRecipes]
+    )
 
     return (
         <>

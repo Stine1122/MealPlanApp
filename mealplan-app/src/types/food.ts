@@ -11,3 +11,8 @@ export type InputProps = {
   input: string
   setInput: React.Dispatch<React.SetStateAction<string>>
 }
+
+export type OptionProps = {
+  opt: string
+  setOpt: React.Dispatch<React.SetStateAction<string>>
+}
