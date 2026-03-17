@@ -8,6 +8,8 @@ import CheckBoxes from './CheckBoxes'
 import ShoppingList from './ShoppingList'
 import { useLocalStorage } from "../../storage/useLocalStorage"
 import { GenerateButtons, DeleteButtonMealPlan } from "./Buttons"
+import burger from '../../pictures/burger.png'
+import ramen from '../../pictures/ramen.png'
 
 function MealPlan() {
     const [input, setInput] = useState("")
@@ -88,9 +90,13 @@ function MealPlan() {
         <>
         <div className="overflow-auto flex flex-col w-1/2">
 
-            <h1 className="text-center text-5xl mt-10 font-headline text-brown-900">
-                Din ugentlige madplan
-            </h1>
+            <div className="flex flex-row self-center text-center gap-3">
+                <img src={burger} className="self-center h-15 w-15 transition-transform mt-7"/>
+                <h1 className="text-center text-5xl mt-10 font-headline text-brown-900">
+                    Din ugentlige madplan
+                </h1>
+                <img src={ramen} className="self-center h-15 w-15 transition-transform mt-7"/>
+            </div>
 
             <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12">
 

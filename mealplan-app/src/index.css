@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-headline: "Noto Sans", sans-serif;
+  --font-headline: "Comic Neue", cursive;
   --font-items: "Indie Flower", cursive;
 }
 
