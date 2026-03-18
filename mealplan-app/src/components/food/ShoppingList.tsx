@@ -4,6 +4,7 @@ import List from './List'
 import { type ShoppingListProps } from "../../types/recipe"
 import { useLocalStorage } from "../../storage/useLocalStorage"
 import shoppingcart from "../../pictures/shopping_cart.png"
+import { DeleteButtonList } from './Buttons'
 
 function ShoppingList({ shoppinglist }: ShoppingListProps) {
     const [list, setList] = useLocalStorage<string[]>("shopping-list",[])
@@ -23,6 +24,9 @@ function ShoppingList({ shoppinglist }: ShoppingListProps) {
             </div>
             <Input list={list} setList={setList}/>
             <List list={list} setList={setList}/>
+            {list.length !== 0 && (
+                <DeleteButtonList list={list} setList={setList} str={"indkøbsliste"}/>
+            )}
         </div>
     )
 }

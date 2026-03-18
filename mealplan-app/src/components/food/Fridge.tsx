@@ -2,6 +2,7 @@ import Input from './Input'
 import List from './List'
 import { type FridgeProps } from "../../types/food"
 import { useLocalStorage } from "../../storage/useLocalStorage"
+import { DeleteButtonList } from './Buttons'
 import snowflake from '../../pictures/snowflake.png'
 import fridge from '../../pictures/fridge.png'
 import wheat from '../../pictures/wheat.png'
@@ -36,6 +37,9 @@ function Fridge({ type }: FridgeProps) {
             </div>
             <Input list={list} setList={setList}/>
             <List list={list} setList={setList}/>
+            {list.length !== 0 && (
+                <DeleteButtonList list={list} setList={setList} str={title.toLowerCase()}/>
+            )}
         </div>
     )
 }

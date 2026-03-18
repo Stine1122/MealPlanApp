@@ -1,9 +1,9 @@
 import { type OptionProps } from '../../types/food';
 
 function DropdownInput({ opt, setOpt}: OptionProps) {
-  const options = ["g", "kg", "ml", "l", "stk"];
-  let w1 = "w-15"
-  let w2 = "w-11"
+  const options = ["g", "kg", "ml", "l", "stk", "pose", "dåse"];
+  let w1 = "w-18"
+  let w2 = "w-14"
   if(opt === "") {
     w1 = "w-27"
     w2 = "w-23"

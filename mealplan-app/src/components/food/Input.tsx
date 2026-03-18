@@ -13,12 +13,13 @@ function handleInput({input, setInput} : InputProps, { setList }: ListProps, num
     if (input.trim() !== "") {
         const str = input.trim().toLowerCase()
         const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+        const total_item = num + " " + opt + " " + capitalized
 
         setList(prev => {
-            if (prev.some(item => item.toLowerCase() === str)) {
+            if (prev.some(item => item === total_item)) {
                 return prev
             }
-            return [...prev, num + " " + opt + " " + capitalized]
+            return [total_item, ...prev]
         })
 
         setInput("")
@@ -28,7 +29,7 @@ function handleInput({input, setInput} : InputProps, { setList }: ListProps, num
 
 function Input({ list, setList }: ListProps) {
     const [input, setInput] = useState("")
-    const [num, setNum] = useState<number| "">("")
+    const [num, setNum] = useState<number| "">(1)
     const [opt, setOpt] = useState("")
     const [error, setError] = useState("")
 
