@@ -4,10 +4,26 @@ import { type FridgeProps } from "../../types/food"
 import { useLocalStorage } from "../../storage/useLocalStorage"
 import snowflake from '../../pictures/snowflake.png'
 import fridge from '../../pictures/fridge.png'
+import wheat from '../../pictures/wheat.png'
 
 function Fridge({ type }: FridgeProps) {
-    const title = type === "fridge" ? "Køleskab" : "Fryser"
-    const image = type === "fridge" ? fridge : snowflake
+    type ApplianceType = "fridge" | "freezer" | "pantry"
+
+    const titles: Record<ApplianceType, string> = {
+        fridge: "Køleskab",
+        freezer: "Fryser",
+        pantry: "Tørvarer",
+    }
+
+    const images: Record<ApplianceType, string> = {
+        fridge: fridge,
+        freezer: snowflake,
+        pantry: wheat,
+    }
+
+    const title = titles[type]
+    const image = images[type]
+
     const storageKey = `${type}-items`
     const [list, setList] = useLocalStorage<string[]>(storageKey,[])
 

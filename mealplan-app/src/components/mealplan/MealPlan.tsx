@@ -5,7 +5,7 @@ import Input from "./Input"
 import ErrorMessage from "./ErrorMessages"
 import Loading from './Loading'
 import CheckBoxes from './CheckBoxes'
-import ShoppingList from './ShoppingList'
+import ShoppingList from '../food/ShoppingList'
 import { useLocalStorage } from "../../storage/useLocalStorage"
 import { GenerateButtons, DeleteButtonMealPlan } from "./Buttons"
 import burger from '../../pictures/burger.png'
@@ -38,10 +38,12 @@ function MealPlan() {
 
         setResponse(null)
         setVisibleRecipes([])
+        localStorage.removeItem("shopping-list-deleted")
 
         try {
             const fridgeItems = JSON.parse(localStorage.getItem("fridge-items") || "[]");
             const freezerItems = JSON.parse(localStorage.getItem("freezer-items") || "[]");
+            const pantryItems = JSON.parse(localStorage.getItem("pantry-items") || "[]")
             const shoppinglist = JSON.parse(localStorage.getItem("shopping-list") || "[]");
 
             const r = await fetch("http://localhost:5043/generatecontent", {        
@@ -52,6 +54,7 @@ function MealPlan() {
                     persons: num,
                     fridge: fridgeItems,
                     freezer: freezerItems,
+                    pantry: pantryItems,
                     allergies: allergies,
                     shoppinglist: shoppinglist,
                     mode: mode

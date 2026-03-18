@@ -1,5 +1,5 @@
 export type FridgeProps = {
-    type: "fridge" | "freezer"
+    type: "fridge" | "freezer" | "pantry"
 }
 
 export type ListProps = {

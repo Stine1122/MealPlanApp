@@ -14,7 +14,7 @@ public static class MealPlanPrompts
         """;
     }
 
-    public static string GeneralPrompt(List<string> fridge, List<string> freezer, string extraPrompt, int days, List<string> allergies, List<string> shoppinglist)
+    public static string GeneralPrompt(List<string> fridge, List<string> freezer, List<string> pantry, string extraPrompt, int days, List<string> allergies, List<string> shoppinglist)
     {
         return $"""
 
@@ -31,7 +31,12 @@ public static class MealPlanPrompts
         Foretræk at bruge ingredienser fra min fryser:
         {string.Join(", ", freezer)}
 
-        Hvis en ingrediens fra køleskab eller fryser allerede er brugt i en tidligere opskrift, må den ikke bruges igen i resten af madplanen.
+        Foretræk at bruge ingredienser fra mit spisekammer:
+        {string.Join(", ", pantry)}
+
+        Hvis en ingrediens fra køleskab, fryser eller spisekammer allerede er brugt i en tidligere opskrift, må den ikke bruges igen i resten af madplanen.
+
+        Du behøves IKKE bruge alle ingredienser fra henholdsvis køleskab, fryser og spisekammer.
 
         Andre ingredienser må meget gerne også tilføjes hvis det passer godt ind i opskrifterne. Disse ingredienser må meget gerne genbruges.
 
@@ -53,7 +58,7 @@ public static class MealPlanPrompts
         """;
     }
 
-    public static string EachDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
+    public static string EachDay(List<string> fridge, List<string> freezer, List<string> pantry, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
     {
         return $"""
         {RulesPrompt()}
@@ -65,11 +70,11 @@ public static class MealPlanPrompts
 
         Hver dag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, extraPrompt, 7, allergies, shoppinglist)}
+        {GeneralPrompt(fridge, freezer, pantry, extraPrompt, 7, allergies, shoppinglist)}
         """;
     }
 
-    public static string TwoDay(List<string> fridge, List<string> freezer, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
+    public static string TwoDay(List<string> fridge, List<string> freezer, List<string> pantry, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
     {
         return $"""
         {RulesPrompt()}
@@ -86,7 +91,7 @@ public static class MealPlanPrompts
 
         Opskriften til søndag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, extraPrompt, 4, allergies, shoppinglist)}
+        {GeneralPrompt(fridge, freezer, pantry, extraPrompt, 4, allergies, shoppinglist)}
         """;
     }
 }
