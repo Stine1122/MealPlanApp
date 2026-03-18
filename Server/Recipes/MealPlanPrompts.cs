@@ -34,9 +34,9 @@ public static class MealPlanPrompts
         Foretræk at bruge ingredienser fra mit spisekammer:
         {string.Join(", ", pantry)}
 
-        Hvis en ingrediens fra køleskab, fryser eller spisekammer allerede er brugt i en tidligere opskrift, må den ikke bruges igen i resten af madplanen.
-
-        Du behøves IKKE bruge alle ingredienser fra henholdsvis køleskab, fryser og spisekammer.
+        Brug KUN realistiske mængder af ingredienserne - uanset hvor meget der er på lager. 
+        Hvis der fx er 100 løg, skal du stadig kun bruge 2-3 løg i en opskrift hvis det er passende.
+        Mængden i køleskab/fryser/spisekammer er blot en indikation af hvad der er tilgængeligt, ikke hvor meget der skal bruges.
 
         Andre ingredienser må meget gerne også tilføjes hvis det passer godt ind i opskrifterne. Disse ingredienser må meget gerne genbruges.
 
