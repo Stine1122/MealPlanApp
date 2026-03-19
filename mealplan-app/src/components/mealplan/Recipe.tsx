@@ -1,6 +1,7 @@
 import { type RecipeProps } from "../../types/recipe"
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import SaveRecipes from "../db/SaveRecipes"
 
 function formatTime(minutes: number): string {
   if (minutes < 60) return `${minutes} minutter`;
@@ -36,8 +37,8 @@ export default function Recipe({ response }: RecipeProps) {
           <div>
             <p className="font-bold text-xl">{response.recipe_name}</p>
 
-            {response.allergies !== null && (
-              <p className="italic">{response.allergies.join(", ")}</p>
+            {(response.allergies ?? []).length > 0 && (
+              <p className="italic">{(response.allergies ?? []).join(", ")}</p>
             )}
 
             <p className="font-semibold" >Til {response.servings} personer</p>
@@ -55,17 +56,20 @@ export default function Recipe({ response }: RecipeProps) {
             <p className="font-semibold mt-2">Ingredienser:</p>
 
             <ul className="list-disc list-inside ml-2">
-              {response.ingredients.map((ing, i) => (
+              {(response.ingredients ?? []).map((ing, i) => (
                 <li key={i}>{ing.quantity} {ing.name}</li>
               ))}
             </ul>
 
             <p className="font-semibold mt-2">Instruktioner:</p>
             <ol className="list-disc list-inside ml-2">
-              {response.instructions.map((step, i) => (
+              {(response.instructions ?? []).map((step, i) => (
                 <li key={i}>{step}</li>
               ))}
             </ol>
+          </div>
+          <div className="self-center text-center m-3 mt-5">
+            <SaveRecipes/>
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.FileProviders;
 using Google.GenAI;
 using MyApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -23,6 +24,10 @@ builder.Services.AddSingleton(sp =>
              ?? throw new InvalidOperationException("GoogleApiKey is missing");
     return new Client(apiKey: apiKey);
 });
+
+builder.Services.AddDbContext<MealPlanContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // register the meal plan service that wraps the GenAI calls and JSON parsing
 builder.Services.AddScoped<MealPlanService>();
@@ -64,6 +69,21 @@ app.MapPost("/generatecontent", async (MealPlanService mealPlanService, Generate
     {
         Console.WriteLine(ex);
         return Results.Problem("Unexpected server error.");
+    }
+});
+
+app.MapPost("/saverecipes", async (MealPlanContext db, List<Recipe> recipes) =>
+{
+    try
+    {
+        db.Recipes.AddRange(recipes);
+        await db.SaveChangesAsync();
+        return Results.Ok("Recipes saved successfully");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.Problem("Failed to save recipes.");
     }
 });
 
