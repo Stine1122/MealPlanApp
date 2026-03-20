@@ -16,6 +16,7 @@ export default defineConfig({
     proxy: {
       '/saverecipes': 'http://localhost:5043',
       '/generatecontent': 'http://localhost:5043',
+      '/recipes': 'http://localhost:5043',
     }
   }
 })

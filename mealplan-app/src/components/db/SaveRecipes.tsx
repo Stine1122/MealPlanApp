@@ -1,15 +1,20 @@
 import { type RecipeProps as RecipeType } from "../../types/recipe"
 
-function SaveRecipes({ response }: RecipeType) {
+interface SaveRecipesProps extends RecipeType {
+    onSaved: (id: number) => void;
+}
+
+function SaveRecipes({ response, onSaved }: SaveRecipesProps) {
 
     const saveRecipes = async () => {
-        console.log("Saving recipe:", response);
         const res = await fetch("/saverecipes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(response)
         });
-        console.log("Response status:", res.status);
+        const id = await res.json();
+        onSaved(id);
+        console.log("Saved recipe with id: ", id)
     }
 
     return (

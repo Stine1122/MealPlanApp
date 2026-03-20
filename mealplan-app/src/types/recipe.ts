@@ -23,3 +23,8 @@ export type RecipeProps = {
 export type ShoppingListProps = {
   shoppinglist: Ingredient[]
 }
+
+export type SavedIdProps = {
+    savedId: number | null
+    setSavedId: React.Dispatch<React.SetStateAction<number | null>>
+}

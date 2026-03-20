@@ -2,6 +2,7 @@ import { type RecipeProps } from "../../types/recipe"
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SaveRecipes from "../db/SaveRecipes"
+import DeleteRecipes from "../db/DeleteRecipes";
 
 function formatTime(minutes: number): string {
   if (minutes < 60) return `${minutes} minutter`;
@@ -15,6 +16,7 @@ function formatTime(minutes: number): string {
 export default function Recipe({ response }: RecipeProps) {
 
   const [open, setOpen] = useState(false);
+  const [savedId, setSavedId] = useState<number | null>(null);
 
   return (
     <div className="w-full rounded-lg self-center animate-fade-in">
@@ -68,9 +70,15 @@ export default function Recipe({ response }: RecipeProps) {
               ))}
             </ol>
           </div>
+
           <div className="self-center text-center m-3 mt-5">
-            <SaveRecipes response={response}/>
+            {savedId === null ? (
+              <SaveRecipes response={response} onSaved={setSavedId} />
+            ) : (
+              <DeleteRecipes savedId={savedId} setSavedId={setSavedId} />
+            )}
           </div>
+
         </div>
       )}
     </div>

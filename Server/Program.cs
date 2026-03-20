@@ -121,13 +121,23 @@ app.MapPost("/saverecipes", async (MealPlanContext db, Recipe recipe) =>
         }
 
         await db.SaveChangesAsync();
-        return Results.Ok("Recipe saved successfully");
+        return Results.Ok(savedRecipe.Id);
     }
     catch (Exception ex)
     {
         Console.WriteLine(ex);
         return Results.Problem("Failed to save recipe.");
     }
+});
+
+app.MapDelete("/recipes/{id}", async (MealPlanContext db, int id) =>
+{
+    var recipe = await db.Recipes.FindAsync(id);
+    if (recipe == null) return Results.NotFound();
+
+    db.Recipes.Remove(recipe);
+    await db.SaveChangesAsync();
+    return Results.Ok("Recipe deleted");
 });
 
 app.Run();
