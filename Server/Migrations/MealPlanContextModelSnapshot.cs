@@ -44,7 +44,7 @@ namespace Server.Migrations
 
                     b.ToTable("Ingredients");
 
-                    b.HasAnnotation("Relational:JsonPropertyName", "shoppinglist");
+                    b.HasAnnotation("Relational:JsonPropertyName", "ingredients");
                 });
 
             modelBuilder.Entity("Recipe", b =>
@@ -59,14 +59,14 @@ namespace Server.Migrations
                         .HasColumnType("jsonb")
                         .HasAnnotation("Relational:JsonPropertyName", "allergies");
 
-                    b.Property<int?>("BakeTimeMinutes")
+                    b.Property<int?>("CookingTimeMinutes")
                         .HasColumnType("integer")
-                        .HasAnnotation("Relational:JsonPropertyName", "bake_time_minutes");
+                        .HasAnnotation("Relational:JsonPropertyName", "cooking_time_minutes");
 
-                    b.Property<string>("Day")
+                    b.Property<List<Ingredient>>("Ingredients")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("Relational:JsonPropertyName", "day");
+                        .HasColumnType("jsonb")
+                        .HasAnnotation("Relational:JsonPropertyName", "ingredients");
 
                     b.PrimitiveCollection<List<string>>("Instructions")
                         .IsRequired()
@@ -85,11 +85,6 @@ namespace Server.Migrations
                     b.Property<int>("Servings")
                         .HasColumnType("integer")
                         .HasAnnotation("Relational:JsonPropertyName", "servings");
-
-                    b.Property<List<Ingredient>>("ShoppingList")
-                        .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasAnnotation("Relational:JsonPropertyName", "shoppinglist");
 
                     b.Property<int?>("TotalTimeMinutes")
                         .HasColumnType("integer")

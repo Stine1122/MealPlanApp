@@ -46,8 +46,8 @@ export default function Recipe({ response }: RecipeProps) {
             {response.prep_time_minutes !== null && (
               <p>Forberedelsestid: {formatTime(response.prep_time_minutes)}</p>
             )}
-            {response.bake_time_minutes !== null && (
-              <p>Tilberedningstid: {formatTime(response.bake_time_minutes)}</p>
+            {response.cooking_time_minutes !== null && (
+              <p>Tilberedningstid: {formatTime(response.cooking_time_minutes)}</p>
             )}
             {response.total_time_minutes !== null && (
               <p>Total tid: {formatTime(response.total_time_minutes)}</p>
@@ -69,7 +69,7 @@ export default function Recipe({ response }: RecipeProps) {
             </ol>
           </div>
           <div className="self-center text-center m-3 mt-5">
-            <SaveRecipes/>
+            <SaveRecipes response={response}/>
           </div>
         </div>
       )}

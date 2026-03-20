@@ -33,15 +33,14 @@ namespace Server.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Day = table.Column<string>(type: "text", nullable: false),
                     RecipeName = table.Column<string>(type: "text", nullable: false),
                     Allergies = table.Column<string[]>(type: "jsonb", nullable: true),
                     Servings = table.Column<int>(type: "integer", nullable: false),
                     PrepTimeMinutes = table.Column<int>(type: "integer", nullable: true),
-                    BakeTimeMinutes = table.Column<int>(type: "integer", nullable: true),
+                    CookingTimeMinutes = table.Column<int>(type: "integer", nullable: true),
                     TotalTimeMinutes = table.Column<int>(type: "integer", nullable: true),
-                    Instructions = table.Column<List<string>>(type: "jsonb", nullable: false),
-                    ShoppingList = table.Column<List<Ingredient>>(type: "jsonb", nullable: false)
+                    Ingredients = table.Column<List<Ingredient>>(type: "jsonb", nullable: false),
+                    Instructions = table.Column<List<string>>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -2,6 +2,7 @@ using Microsoft.Extensions.FileProviders;
 using Google.GenAI;
 using MyApp.Services;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -26,7 +27,11 @@ builder.Services.AddSingleton(sp =>
 });
 
 builder.Services.AddDbContext<MealPlanContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("DefaultConnection"))
+            .EnableDynamicJson()
+            .Build()
+    ));
 
 
 // register the meal plan service that wraps the GenAI calls and JSON parsing
@@ -72,18 +77,56 @@ app.MapPost("/generatecontent", async (MealPlanService mealPlanService, Generate
     }
 });
 
-app.MapPost("/saverecipes", async (MealPlanContext db, List<Recipe> recipes) =>
+app.MapPost("/saverecipes", async (MealPlanContext db, Recipe recipe) =>
 {
     try
     {
-        db.Recipes.AddRange(recipes);
+        var savedRecipe = new Recipe
+        {
+            RecipeName = recipe.RecipeName,
+            Allergies = recipe.Allergies,
+            Servings = recipe.Servings,
+            PrepTimeMinutes = recipe.PrepTimeMinutes,
+            CookingTimeMinutes = recipe.CookingTimeMinutes,
+            TotalTimeMinutes = recipe.TotalTimeMinutes,
+            Instructions = recipe.Instructions,
+            Ingredients = recipe.Ingredients,
+            ShoppingList = recipe.ShoppingList,
+            Day = recipe.Day
+        };
+
+        db.Recipes.Add(savedRecipe);
+        await db.SaveChangesAsync(); // Save recipe first to get its Id
+
+        foreach (var ing in recipe.Ingredients)
+        {
+            // Check if ingredient already exists in the database
+            var existing = await db.Ingredients
+                .FirstOrDefaultAsync(i => i.Name.ToLower() == ing.Name.ToLower());
+
+            if (existing == null)
+            {
+                existing = new Ingredient { Name = ing.Name, Quantity = ing.Quantity };
+                db.Ingredients.Add(existing);
+                await db.SaveChangesAsync();
+            }
+
+            // Link ingredient to recipe in join table
+            db.RecipeIngredients.Add(new RecipeIngredient
+            {
+                RecipeId = savedRecipe.Id,
+                IngredientId = existing.Id,
+                Quantity = ing.Quantity
+            });
+        }
+
         await db.SaveChangesAsync();
-        return Results.Ok("Recipes saved successfully");
+        return Results.Ok("Recipe saved successfully");
     }
     catch (Exception ex)
     {
         Console.WriteLine(ex);
-        return Results.Problem("Failed to save recipes.");
+        return Results.Problem("Failed to save recipe.");
     }
 });
 

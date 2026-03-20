@@ -9,7 +9,7 @@ export type Recipe = {
   servings: number
   allergies: string[] | null
   prep_time_minutes: number | null
-  bake_time_minutes: number | null
+  cooking_time_minutes: number | null
   total_time_minutes: number | null
   ingredients: Ingredient[]
   instructions: string[]

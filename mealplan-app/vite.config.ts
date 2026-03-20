@@ -5,11 +5,17 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-     tailwindcss(),
+    tailwindcss(),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler']],
       },
     }),
   ],
+  server: {
+    proxy: {
+      '/saverecipes': 'http://localhost:5043',
+      '/generatecontent': 'http://localhost:5043',
+    }
+  }
 })

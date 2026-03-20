@@ -8,9 +8,10 @@ public class MealPlanContext : DbContext
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
+    private List<string> model_builder_entity_jsonb = [nameof(Recipe.Allergies), nameof(Recipe.Ingredients), nameof(Recipe.Instructions)];
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Composite primary key for join table
         modelBuilder.Entity<RecipeIngredient>()
             .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
 
@@ -24,16 +25,11 @@ public class MealPlanContext : DbContext
             .WithMany(i => i.RecipeIngredients)
             .HasForeignKey(ri => ri.IngredientId);
 
-        modelBuilder.Entity<Recipe>()
-            .Property(r => r.Allergies)
-            .HasColumnType("jsonb");
-
-        modelBuilder.Entity<Recipe>()
-            .Property(r => r.Instructions)
-            .HasColumnType("jsonb");
-
-        modelBuilder.Entity<Recipe>()
-            .Property(r => r.ShoppingList)
-            .HasColumnType("jsonb");
+        foreach (var property in model_builder_entity_jsonb)
+        {
+            modelBuilder.Entity<Recipe>()
+                .Property(property)
+                .HasColumnType("jsonb");
+        }
     }
 }

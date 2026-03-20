@@ -11,7 +11,6 @@ public class Ingredient
     [JsonPropertyName("quantity")]
     public required string Quantity { get; set; }
 
-    // Navigation
     public List<RecipeIngredient> RecipeIngredients { get; set; } = [];
 }
 
@@ -19,6 +18,7 @@ public class Recipe
 {
     public int Id { get; set; }
 
+    [NotMapped]
     [JsonPropertyName("day")]
     public required string Day { get; set; }
 
@@ -34,28 +34,25 @@ public class Recipe
     [JsonPropertyName("prep_time_minutes")]
     public int? PrepTimeMinutes { get; set; }
 
-    [JsonPropertyName("bake_time_minutes")]
-    public int? BakeTimeMinutes { get; set; }
+    [JsonPropertyName("cooking_time_minutes")]
+    public int? CookingTimeMinutes { get; set; }
 
     [JsonPropertyName("total_time_minutes")]
     public int? TotalTimeMinutes { get; set; }
 
-    [NotMapped]
     [JsonPropertyName("ingredients")]
     public required List<Ingredient> Ingredients { get; set; }
 
     [JsonPropertyName("instructions")]
     public required List<string> Instructions { get; set; }
 
+    [NotMapped]
     [JsonPropertyName("shoppinglist")]
     public required List<Ingredient> ShoppingList { get; set; }
 
-    // For database navigation 👇
-    [NotMapped]
     public List<RecipeIngredient> RecipeIngredients { get; set; } = [];
 }
 
-// Explicit join table (allows extra fields like Quantity per recipe)
 public class RecipeIngredient
 {
     public int RecipeId { get; set; }
@@ -64,5 +61,5 @@ public class RecipeIngredient
     public int IngredientId { get; set; }
     public Ingredient Ingredient { get; set; } = null!;
 
-    public required string Quantity { get; set; } // quantity is per-recipe, not global
+    public required string Quantity { get; set; }
 }

@@ -41,7 +41,7 @@ public static class MealPlanPrompts
         Andre ingredienser må meget gerne også tilføjes hvis det passer godt ind i opskrifterne. Disse ingredienser må meget gerne genbruges.
 
         TIDSOPLYSNINGER:
-        Husk at tilføje både forberedelsestid, tilberedningstid (som skal under bake_time_minutes i schema) og totale tid.
+        Husk at tilføje både forberedelsestid, tilberedningstid (som skal under cooking_time_minutes i schema) og totale tid.
 
         INDKØBSLISTE OPLYSNINGER:
         Tilføj de ingredienser som du ikke kunne finde i køleskab eller fryser til shoppinglist i schema. Hvis en ingrediens allerede er på indkøbslisten i et andet objekt i json-arrayet, må den ikke tilføjes igen.

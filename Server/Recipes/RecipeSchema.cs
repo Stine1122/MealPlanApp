@@ -29,7 +29,7 @@ public static class RecipeSchema
 
                 ["prep_time_minutes"] = new Schema { Type = "integer" },
 
-                ["bake_time_minutes"] = new Schema { Type = "integer" },
+                ["cooking_time_minutes"] = new Schema { Type = "integer" },
 
                 ["total_time_minutes"] = new Schema { Type = "integer" },
 
