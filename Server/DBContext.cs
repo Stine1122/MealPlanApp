@@ -7,7 +7,6 @@ public class MealPlanContext : DbContext
     public DbSet<Ingredient> Ingredients { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
-
     private List<string> model_builder_entity_jsonb = [nameof(Recipe.Allergies), nameof(Recipe.Ingredients), nameof(Recipe.Instructions)];
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

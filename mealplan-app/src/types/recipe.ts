@@ -4,6 +4,7 @@ export type Ingredient = {
 }
 
 export type Recipe = {
+  savedId?: number | null
   day: string
   recipe_name: string
   servings: number
@@ -18,13 +19,9 @@ export type Recipe = {
 
 export type RecipeProps = {
   response: Recipe
+  onSaved: (id: number | null) => void
 }
 
 export type ShoppingListProps = {
   shoppinglist: Ingredient[]
-}
-
-export type SavedIdProps = {
-    savedId: number | null
-    setSavedId: React.Dispatch<React.SetStateAction<number | null>>
 }

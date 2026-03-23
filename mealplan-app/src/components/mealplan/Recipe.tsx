@@ -13,10 +13,10 @@ function formatTime(minutes: number): string {
     : `${hours} ${hours === 1 ? "time" : "timer"} ${remainingMinutes} minutter`;
 }
 
-export default function Recipe({ response }: RecipeProps) {
-
+export default function Recipe({ response, onSaved }: RecipeProps & { onSaved: (id: number | null) => void }) {
+  
+  const savedId = response.savedId ?? null;
   const [open, setOpen] = useState(false);
-  const [savedId, setSavedId] = useState<number | null>(null);
 
   return (
     <div className="w-full rounded-lg self-center animate-fade-in">
@@ -73,9 +73,9 @@ export default function Recipe({ response }: RecipeProps) {
 
           <div className="self-center text-center m-3 mt-5">
             {savedId === null ? (
-              <SaveRecipes response={response} onSaved={setSavedId} />
+              <SaveRecipes response={response} onSaved={onSaved} />
             ) : (
-              <DeleteRecipes savedId={savedId} setSavedId={setSavedId} />
+              <DeleteRecipes response={response} onSaved={onSaved} />
             )}
           </div>
 

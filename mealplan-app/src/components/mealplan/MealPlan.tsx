@@ -112,7 +112,18 @@ function MealPlan() {
                 {response !== null && (
                     <>
                         {visibleRecipes.map((recipe, index) => (
-                            <Recipe key={index} response={recipe} />
+                            <Recipe 
+                                key={index} 
+                                response={recipe} 
+                                onSaved={(id) => {
+                                    setResponse(prev => prev?.map((r, i) => 
+                                        i === index ? { ...r, savedId: id } : r
+                                    ) ?? null)
+                                    setVisibleRecipes(prev => prev.map((r, i) => 
+                                        i === index ? { ...r, savedId: id } : r
+                                    ))
+                                }}
+                            />
                         ))}
                         <DeleteButtonMealPlan response={null} setResponse={setResponse}/>
                     </>

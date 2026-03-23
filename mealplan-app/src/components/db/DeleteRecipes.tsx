@@ -1,11 +1,11 @@
-import { type SavedIdProps } from "../../types/recipe";
+import { type RecipeProps as RecipeType } from "../../types/recipe";
 
-function DeleteRecipes({ savedId, setSavedId }: SavedIdProps) {
+function DeleteRecipes({ response, onSaved }: RecipeType) {
 
     const deleteRecipe = async () => {
-        if (savedId === null) return;
-        await fetch(`/recipes/${savedId}`, { method: "DELETE" });
-        setSavedId(null);
+        if (response.savedId === null) return;
+        await fetch(`/recipes/${response.savedId}`, { method: "DELETE" });
+        onSaved(null);
     }
 
     return (

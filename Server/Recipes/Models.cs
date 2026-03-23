@@ -8,10 +8,20 @@ public class Ingredient
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
+    [NotMapped]
     [JsonPropertyName("quantity")]
     public required string Quantity { get; set; }
 
     public List<RecipeIngredient> RecipeIngredients { get; set; } = [];
+}
+
+public class IngredientDto
+{
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
+
+    [JsonPropertyName("quantity")]
+    public required string Quantity { get; set; }
 }
 
 public class Recipe
@@ -41,7 +51,7 @@ public class Recipe
     public int? TotalTimeMinutes { get; set; }
 
     [JsonPropertyName("ingredients")]
-    public required List<Ingredient> Ingredients { get; set; }
+    public required List<IngredientDto> Ingredients { get; set; }
 
     [JsonPropertyName("instructions")]
     public required List<string> Instructions { get; set; }

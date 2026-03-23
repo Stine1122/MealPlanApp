@@ -35,11 +35,6 @@ namespace Server.Migrations
                         .HasColumnType("text")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
 
-                    b.Property<string>("Quantity")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("Relational:JsonPropertyName", "quantity");
-
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");

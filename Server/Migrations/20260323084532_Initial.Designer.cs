@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Server.Migrations
 {
     [DbContext(typeof(MealPlanContext))]
-    [Migration("20260320090415_Initial")]
+    [Migration("20260323084532_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -37,11 +37,6 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
-
-                    b.Property<string>("Quantity")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("Relational:JsonPropertyName", "quantity");
 
                     b.HasKey("Id");
 
