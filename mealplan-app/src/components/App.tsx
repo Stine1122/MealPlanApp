@@ -1,5 +1,5 @@
 import MealPlan from './mealplan/MealPlan'
-import Fridge from './food/Fridge'
+import Fridge from './food/Inventory'
 
 function App() {
     return (

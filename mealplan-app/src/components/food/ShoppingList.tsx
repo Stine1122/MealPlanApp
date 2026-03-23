@@ -17,16 +17,21 @@ function ShoppingList({ shoppinglist }: ShoppingListProps) {
 
     return (
         <div className="flex flex-col">
+
             <div className="flex flex-row self-center text-center gap-3">
                 <img src={shoppingcart} className="self-center h-9 w-9 transition-transform"/>
                 <h1 className="text-4xl font-headline self-center text-center">Indkøbsliste</h1>
                 <img src={shoppingcart} className="self-center h-9 w-9 transition-transform"/>
             </div>
+
             <Input list={list} setList={setList}/>
+
             <List list={list} setList={setList}/>
+
             {list.length !== 0 && (
                 <DeleteButtonList list={list} setList={setList} str={"indkøbsliste"}/>
             )}
+
         </div>
     )
 }

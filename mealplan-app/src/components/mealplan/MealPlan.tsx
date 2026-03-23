@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { type Recipe as RecipeType } from "../../types/recipe"
 import Recipe from "./Recipe"
 import Input from "./Input"
-import ErrorMessage from "./ErrorMessages"
+import ErrorMessage from "../ErrorMessages"
 import Loading from './Loading'
 import CheckBoxes from './CheckBoxes'
 import ShoppingList from '../food/ShoppingList'

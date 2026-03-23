@@ -15,14 +15,13 @@ function Fridge({ type }: FridgeProps) {
         freezer: "Fryser",
         pantry: "Tørvarer",
     }
+    const title = titles[type]
 
     const images: Record<ApplianceType, string> = {
         fridge: fridge,
         freezer: snowflake,
         pantry: wheat,
     }
-
-    const title = titles[type]
     const image = images[type]
 
     const storageKey = `${type}-items`
@@ -30,16 +29,21 @@ function Fridge({ type }: FridgeProps) {
 
     return (
         <div className="flex flex-col">
+
             <div className="flex flex-row self-center text-center gap-3">
                 <img src={image} className="self-center h-9 w-9 transition-transform"/>
                 <h1 className="text-4xl font-headline self-center text-center">{title}</h1>
                 <img src={image} className="self-center h-9 w-9 transition-transform"/>
             </div>
+
             <Input list={list} setList={setList}/>
+            
             <List list={list} setList={setList}/>
+
             {list.length !== 0 && (
                 <DeleteButtonList list={list} setList={setList} str={title.toLowerCase()}/>
             )}
+
         </div>
     )
 }

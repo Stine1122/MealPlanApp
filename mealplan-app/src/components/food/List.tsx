@@ -1,7 +1,19 @@
 import { useState } from 'react'
-import { type ListProps } from "../../types/food"
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { DeleteButton, EditButton } from "./Buttons"
+import { type ListProps, type EditProps } from "../../types/food"
 
+export function EditValue({ setEditingItem, editValue, list, setList, item }: EditProps & ListProps & { item: string }) {
+    if (editValue.trim() === "") {
+        setList(prev => prev.filter(i => i !== item))
+        setEditingItem(null)
+        return
+    }
+    if (list.some(i => i.toLowerCase() === editValue.toLowerCase() && i !== item)) {
+        return
+    }
+    setList(prev => prev.map(i => i === item ? editValue : i))
+    setEditingItem(null)
+}
 
 function List({ list, setList }: ListProps) {
     const [editingItem, setEditingItem] = useState<string | null>(null)
@@ -17,46 +29,28 @@ function List({ list, setList }: ListProps) {
 
                     {editingItem === item ? (
                         <input
-                            className="bg-amber-50/90 p-2 border border-amber-50 rounded-2xl font-items w-full"
+                            className="bg-amber-50/90 p-2 border border-amber-50 rounded-2xl font-items w-full h-12"
                             value={editValue}
                             onChange={(e) => setEditValue(e.target.value)}
                             onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    if (editValue.trim() === "") {
-                                        setList(prev => prev.filter(i => i !== item))
-                                        setEditingItem(null)
-                                        return
-                                    }
-                                    if (list.some(i => i.toLowerCase() === editValue.toLowerCase() && i !== item)) {
-                                        return
-                                    }
-                                    setList(prev => prev.map(i => i === item ? editValue : i))
+                                if (e.key === "Enter") 
+                                    EditValue({editingItem, setEditingItem, editValue, setEditValue, list, setList, item})
+                                if (e.key === "Escape") 
                                     setEditingItem(null)
-                                }
-                                if (e.key === "Escape") setEditingItem(null)
                             }}
                             autoFocus
                         />
                     ) : (
-                        <li className="rounded p-1 font-items mr-auto">{item}</li>
+                        <li className="font-items mr-auto">{item}</li>
                     )}
 
-                    <button className="text-olive-800 ml-2 hover:bg-olive-600/50 cursor-pointer p-2 rounded-4xl"
-                        onClick={() => {
-                            if (editingItem === item) {
-                                setEditingItem(null)
-                            } else {
-                                setEditingItem(item)
-                                setEditValue(item)
-                            }
-                        }}>
-                        <PencilSquareIcon className="h-5 w-5 transition-transform"/>
-                    </button>
+                    <EditButton editingItem={editingItem} setEditingItem={setEditingItem} 
+                                editValue={editValue} setEditValue={setEditValue} 
+                                list={list} setList={setList}
+                                item={item}
+                    />
 
-                    <button className="text-right text-right text-red-800 ml-2 hover:bg-red-600/50 cursor-pointer p-2 rounded-4xl" 
-                            onClick={() => setList(list.filter(i => i !== item))}>
-                            <TrashIcon className="h-5 w-5 transition-transform"/>
-                    </button>
+                    <DeleteButton list={list} setList={setList} item={item}/>
 
                 </div>
             ))}

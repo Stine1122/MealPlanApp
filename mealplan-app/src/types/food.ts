@@ -16,3 +16,10 @@ export type OptionProps = {
   opt: string
   setOpt: React.Dispatch<React.SetStateAction<string>>
 }
+
+export type EditProps = {
+  editingItem: string | null
+  setEditingItem: React.Dispatch<React.SetStateAction<string | null>>
+  editValue: string
+  setEditValue: React.Dispatch<React.SetStateAction<string>>
+}
