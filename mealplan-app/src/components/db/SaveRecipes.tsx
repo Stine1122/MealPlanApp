@@ -8,9 +8,9 @@ function SaveRecipes({ response, onSaved }: RecipeType) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(response)
         });
-        const id = await res.json();
-        onSaved(id);
-        console.log("Saved recipe with id: ", id)
+        const savedId = await res.json();
+        onSaved(savedId);
+        console.log(savedId)
     }
 
     return (
@@ -21,5 +21,7 @@ function SaveRecipes({ response, onSaved }: RecipeType) {
         </button>
     )
 }
+
+
 
 export default SaveRecipes
