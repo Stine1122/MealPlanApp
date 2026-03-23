@@ -5,7 +5,7 @@ import Input from "./Input"
 import ErrorMessage from "../ErrorMessages"
 import Loading from './Loading'
 import CheckBoxes from './CheckBoxes'
-import ShoppingList from '../food/ShoppingList'
+import ShoppingList from '../ingredients/ShoppingList'
 import { useLocalStorage } from "../../storage/useLocalStorage"
 import { GenerateButtons, DeleteButtonMealPlan } from "./Buttons"
 import burger from '../../pictures/burger.png'
