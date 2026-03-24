@@ -1,8 +1,6 @@
-import { useState } from 'react'
 import { type InputProps } from "../../types/mealplan"
 
-function Input({ num, setNum }: InputProps) {
-    const [input, setInput] = useState("")
+function Input({ num, setNum, input, setInput }: InputProps) {
 
     return (
         <div className="flex flex-row w-full gap-3 self-center">

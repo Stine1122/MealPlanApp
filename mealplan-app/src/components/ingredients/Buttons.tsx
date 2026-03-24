@@ -2,10 +2,10 @@ import { type ListProps, type EditProps } from "../../types/food"
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { EditValue } from './List'
 
-export function DeleteButtonList({ setList, str }: ListProps & { str: string }) {
+export function DeleteButtonList({ list, setList, str, onDeleteList }: ListProps & { str: string }) {
     return (
         <button className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-700/80 hover:bg-red-600 p-2 rounded-2xl mt-3"
-                onClick={() => {setList([])}}>
+                onClick={() => {onDeleteList ? onDeleteList(list) : setList([])}}>
             Ryd {str}
         </button>
     )

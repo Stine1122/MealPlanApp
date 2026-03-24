@@ -70,15 +70,15 @@ export default function Recipe({ response, onSaved }: RecipeProps) {
             <p className="font-semibold mt-2">Ingredienser:</p>
 
             <ul className="list-disc list-inside ml-2">
-              {(response.ingredients ?? []).map((ing) => (
-                <li>{ing.quantity} {ing.name.toLowerCase()}</li>
+              {(response.ingredients ?? []).map((ing, index) => (
+                <li key={index}>{ing.quantity} {ing.name.toLowerCase()}</li>
               ))}
             </ul>
 
             <p className="font-semibold mt-2">Instruktioner:</p>
             <ol className="list-disc list-inside ml-2">
-              {(response.instructions ?? []).map((step) => (
-                <li>{step}</li>
+              {(response.instructions ?? []).map((step, index) => (
+                <li key={index}>{step}</li>
               ))}
             </ol>
           </div>

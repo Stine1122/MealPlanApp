@@ -42,7 +42,7 @@ function MealPlan() {
                 method: "POST",       
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    prompt: input,
+                    extraPrompt: input,
                     persons: num,
                     fridge: fridgeItems,
                     freezer: freezerItems,
@@ -62,6 +62,8 @@ function MealPlan() {
             setResponse(recipes)
             setInput("")
 
+            console.log(recipes)
+
             recipes.forEach((recipe: RecipeType, index: number) => {
                 setTimeout(() => {
                     setVisibleRecipes(prev => [...prev, recipe])
@@ -70,6 +72,7 @@ function MealPlan() {
 
         } catch (err) {
             console.error(err)
+            setError("Der opstod en fejl. Prøv venligst igen.")
             setResponse(null)
         } finally {
             setLoading(false)
@@ -77,7 +80,7 @@ function MealPlan() {
     }
 
     const allShoppingItems = useMemo(
-        () => (response ?? []).flatMap(recipe => recipe.shoppinglist),
+        () => (response ?? [])[0]?.shoppinglist ?? [],
         [response]
     )
 
@@ -93,9 +96,9 @@ function MealPlan() {
 
             <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12 items-center">
 
-                <Input num={num} setNum={setNum}/>
+                <Input num={num} setNum={setNum} input={input} setInput={setInput}/>
                 <CheckBoxes allergies={allergies} setAllergies={setAllergies}/>
-                <GenerateButtons generate_response={generate_response}/>
+                <GenerateButtons generate_response={generate_response} loading={loading}/>
                 {error && (<ErrorMessage error={error} setError={setError}/>)}
                 {loading && (<Loading/>)}
 

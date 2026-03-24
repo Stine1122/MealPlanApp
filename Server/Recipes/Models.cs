@@ -58,7 +58,7 @@ public class Recipe
 
     [NotMapped]
     [JsonPropertyName("shoppinglist")]
-    public required List<Ingredient> ShoppingList { get; set; }
+    public required List<IngredientDto> ShoppingList { get; set; }
 
     public List<RecipeIngredient> RecipeIngredients { get; set; } = [];
 }

@@ -3,6 +3,8 @@ import { type Recipe as RecipeType } from "./recipe"
 export type InputProps = {
   num: number | ""
   setNum: React.Dispatch<React.SetStateAction<number | "">>
+  input: string
+  setInput: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type GenerateResponseProp = {
@@ -25,7 +27,11 @@ export type TheBoxProps = {
   onChange: (name: string, checked: boolean) => void
 }
 
-export type allergiesProps = {
+export type AllergiesProps = {
     allergies: string[]
     setAllergies: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+export type LoadingProps = {
+    loading: boolean
 }

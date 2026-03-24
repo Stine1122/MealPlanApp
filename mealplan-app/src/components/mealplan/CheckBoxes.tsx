@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { type TheBoxProps } from "../../types/mealplan"
-import { type allergiesProps } from "../../types/mealplan"
+import { type AllergiesProps } from "../../types/mealplan"
 
 function TheBox({ name, checked, onChange }: TheBoxProps) {
     return (
@@ -18,7 +18,7 @@ function TheBox({ name, checked, onChange }: TheBoxProps) {
 
 const OPTIONS = ["Glutenfri", "Laktosefri", "Mælkefri", "Vegetarisk", "Vegansk"] as const
 
-function CheckBoxes({ allergies, setAllergies }: allergiesProps) {
+function CheckBoxes({ allergies, setAllergies }: AllergiesProps) {
 
     const [checked, setChecked] = useState<Record<string, boolean>>(
         Object.fromEntries(OPTIONS.map((name) => [name, allergies.includes(name)]))

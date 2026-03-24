@@ -3,23 +3,25 @@ namespace MyApp.Prompts;
 public static class MealPlanPrompts
 {
 
-    public static string RulesPrompt(string extraPrompt)
+    public static string RulesPrompt()
     {
-        return $"""
+        return """
         VIGTIGSTE REGLER (SKAL ALTID OVERHOLDES):
         1. Allergier er af absolut højeste prioritet
-        2. Brugerens specifikke ønske er af absolut andenhøjeste prioritet: {extraPrompt}
+        2. Brugerens specifikke ønske er af absolut andenhøjeste prioritet
         3. Hvis der opstår konflikt mellem allergier, brugerens ønsker og andre krav,
         skal allergier altid vælges.
         """;
     }
 
-    public static string GeneralPrompt(List<string> fridge, List<string> freezer, List<string> pantry, int days, List<string> allergies, List<string> shoppinglist)
+    public static string GeneralPrompt(List<string> fridge, List<string> freezer, List<string> pantry, int days, List<string> allergies, List<string> shoppinglist, string extraPrompt)
     {
         return $"""
-
         ALLERGIER:
         {string.Join(", ", allergies)}
+
+        BRUGERENS ØNSKER:
+        {extraPrompt}
 
         ØVRIGE KRAV TIL MADPLANEN:
         Foretræk at bruge ingredienser fra mit køleskab:
@@ -41,8 +43,8 @@ public static class MealPlanPrompts
         Husk at tilføje både forberedelsestid, tilberedningstid (som skal under cooking_time_minutes i schema) og totale tid.
 
         INDKØBSLISTE OPLYSNINGER:
-        Tilføj de ingredienser som du ikke kunne finde i køleskab eller fryser til shoppinglist i schema. Hvis en ingrediens allerede er på indkøbslisten i et andet objekt i json-arrayet, må den ikke tilføjes igen.
-        Disse ingredienser er allerede på indkøbslisten:
+        Tilføj de ingredienser som du ikke kunne finde i køleskab, fryser eller spisekammer til shoppinglist i schema.
+        Disse ingredienser er allerede tilgængelige og må IKKE tilføjes til indkøbslisten:
         {string.Join(", ", shoppinglist)}
 
         SPECIFIKKE INGREDIENSER:
@@ -55,10 +57,10 @@ public static class MealPlanPrompts
         """;
     }
 
-    public static string EachDay(List<string> fridge, List<string> freezer, List<string> pantry, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
+    public static string EachDay(List<string> fridge, List<string> freezer, List<string> pantry, int persons, List<string> allergies, List<string> shoppinglist, string extraPrompt)
     {
         return $"""
-        {RulesPrompt(extraPrompt)}
+        {RulesPrompt()}
 
         Generer en ugentlig madplan med præcis 7 opskrifter.
         
@@ -67,14 +69,14 @@ public static class MealPlanPrompts
 
         Hver dag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, pantry, 7, allergies, shoppinglist)}
+        {GeneralPrompt(fridge, freezer, pantry, 7, allergies, shoppinglist, extraPrompt)}
         """;
     }
 
-    public static string TwoDay(List<string> fridge, List<string> freezer, List<string> pantry, string extraPrompt, int persons, List<string> allergies, List<string> shoppinglist)
+    public static string TwoDay(List<string> fridge, List<string> freezer, List<string> pantry, int persons, List<string> allergies, List<string> shoppinglist, string extraPrompt)
     {
         return $"""
-        {RulesPrompt(extraPrompt)}
+        {RulesPrompt()}
 
         Generer en ugentlig madplan med præcis 4 opskrifter.
 
@@ -88,7 +90,7 @@ public static class MealPlanPrompts
 
         Opskriften til søndag skal være en opskrift til {persons} personer.
 
-        {GeneralPrompt(fridge, freezer, pantry, 4, allergies, shoppinglist)}
+        {GeneralPrompt(fridge, freezer, pantry, 4, allergies, shoppinglist, extraPrompt)}
         """;
     }
 }

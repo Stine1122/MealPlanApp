@@ -1,18 +1,22 @@
-import { type GenerateResponseProp } from "../../types/mealplan"
+import { type GenerateResponseProp, type LoadingProps } from "../../types/mealplan"
 import { type ResponseProps } from "../../types/mealplan"
 
-export function GenerateButtons({generate_response} : GenerateResponseProp ) {
+export function GenerateButtons({generate_response, loading} : GenerateResponseProp & LoadingProps) {
     return (
         <div className="flex flex-row gap-3 self-center">
 
-            <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600 
-                            text-amber-50/80 font-headline p-2 rounded-2xl" 
+            <button disabled={loading}
+                    className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600 
+                            text-amber-50/80 font-headline p-2 rounded-2xl
+                            disabled:opacity-50 disabled:cursor-not-allowed" 
                     onClick={() => generate_response("eachday")}>
                 Generer opskrifter til hver dag
             </button>
 
-            <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600
-                            text-amber-50/80 font-headline p-2 rounded-2xl" 
+            <button disabled={loading}
+                    className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600
+                            text-amber-50/80 font-headline p-2 rounded-2xl
+                            disabled:opacity-50 disabled:cursor-not-allowed" 
                     onClick={() => generate_response("twoday")}>
                 Generer opskrifter til hver anden dag
             </button>

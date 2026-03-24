@@ -15,13 +15,31 @@ public class MealPlanService
         _client = client;
     }
 
+    private static string CombineQuantities(IEnumerable<string> quantities)
+    {
+        double total = 0;
+        string unit = "";
+
+        foreach (var q in quantities)
+        {
+            var match = System.Text.RegularExpressions.Regex.Match(q.Trim(), @"^([\d,.]+)\s*([a-zA-Z]*)$");
+            if (match.Success)
+            {
+                total += double.Parse(match.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture);
+                unit = match.Groups[2].Value;
+            }
+        }
+
+        return total > 0 ? $"{total} {unit}" : string.Join(" + ", quantities);
+    }
+
     public async Task<List<Recipe>> GenerateMealPlan(GenerateContentRequest request)
     {
         var schema = RecipeSchema.Value;
 
         var prompt = request.Mode == "eachday"
-        ? MealPlanPrompts.EachDay(request.Fridge, request.Freezer, request.Pantry, request.Prompt, request.Persons, request.Allergies, request.ShoppingList)
-        : MealPlanPrompts.TwoDay(request.Fridge, request.Freezer, request.Pantry, request.Prompt, request.Persons, request.Allergies, request.ShoppingList);
+        ? MealPlanPrompts.EachDay(request.Fridge, request.Freezer, request.Pantry, request.Persons, request.Allergies, request.ShoppingList, request.ExtraPrompt)
+        : MealPlanPrompts.TwoDay(request.Fridge, request.Freezer, request.Pantry, request.Persons, request.Allergies, request.ShoppingList, request.ExtraPrompt);
 
         var response = await _client.Models.GenerateContentAsync(
             model: "models/gemini-3-flash-preview",
@@ -40,12 +58,27 @@ public class MealPlanService
             json = json.Replace("```json", "").Replace("```", "").Trim();
         }
 
-        return JsonSerializer.Deserialize<List<Recipe>>(json ?? "[]") ?? [];
+        var recipes = JsonSerializer.Deserialize<List<Recipe>>(json ?? "[]") ?? [];
+
+        var combinedShoppingList = recipes
+            .SelectMany(r => r.ShoppingList)
+            .GroupBy(ing => ing.Name.ToLower())
+            .Select(g => new IngredientDto
+            {
+                Name = g.First().Name,
+                Quantity = CombineQuantities(g.Select(i => i.Quantity))
+            })
+            .ToList();
+
+        if (recipes.Count > 0)
+            recipes[0].ShoppingList = combinedShoppingList;
+
+        return recipes;
     }
 }
 
 public record GenerateContentRequest(
-    string Prompt,
+    string ExtraPrompt,
     int Persons,
     List<string> Fridge,
     List<string> Freezer,

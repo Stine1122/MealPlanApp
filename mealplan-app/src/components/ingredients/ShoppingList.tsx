@@ -23,6 +23,11 @@ function ShoppingList({ shoppinglist }: ShoppingListProps) {
         setDeletedItems(prev => [...prev, item])
     }
 
+    const handleDeleteList = (list: string[]) => {
+        setList([])
+        setDeletedItems(prev => [...prev, ...list])
+    }
+
     return (
         <div className="flex flex-col">
 
@@ -37,7 +42,7 @@ function ShoppingList({ shoppinglist }: ShoppingListProps) {
             <List list={list} setList={setList} onDelete={handleDelete}/>
 
             {list.length !== 0 && (
-                <DeleteButtonList list={list} setList={setList} str={"indkøbsliste"}/>
+                <DeleteButtonList list={list} setList={setList} onDeleteList={handleDeleteList} str={"indkøbsliste"}/>
             )}
 
         </div>
