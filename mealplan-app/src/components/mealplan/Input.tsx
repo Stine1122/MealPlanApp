@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { type InputProps } from "../../types/mealplan"
 
-function Input({num, setNum} : InputProps) {
+function Input({ num, setNum }: InputProps) {
     const [input, setInput] = useState("")
 
     return (
@@ -19,7 +19,6 @@ function Input({num, setNum} : InputProps) {
                 value={num}
                 onChange = {(e) => { 
                     const value = e.target.value
-
                     if (value === "") {
                         setNum("")
                     } else {

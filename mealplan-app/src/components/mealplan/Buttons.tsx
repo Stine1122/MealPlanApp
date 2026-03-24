@@ -23,14 +23,8 @@ export function GenerateButtons({generate_response} : GenerateResponseProp ) {
 
 export function DeleteButtonMealPlan({ setResponse } : ResponseProps) {
     return (
-        <button
-            className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 
-            p-2 rounded-2xl"
-            onClick={() => {
-                setResponse(null)
-                localStorage.removeItem("mealplan-recipe")
-            }}
-        >
+        <button className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 p-2 rounded-2xl"
+                onClick={() => {setResponse(null)}}>
             Ryd madplan
         </button>
     )

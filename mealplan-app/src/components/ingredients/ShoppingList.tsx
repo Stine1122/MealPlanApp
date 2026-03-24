@@ -8,12 +8,20 @@ import { DeleteButtonList } from './Buttons'
 
 function ShoppingList({ shoppinglist }: ShoppingListProps) {
     const [list, setList] = useLocalStorage<string[]>("shopping-list",[])
+    const [deletedItems, setDeletedItems] = useLocalStorage<string[]>("shopping-list-deleted", [])
 
     useEffect(() => {
         if (shoppinglist.length === 0) return
-        const newItems = shoppinglist.map(item => item.quantity + " " + item.name)
+        const newItems = shoppinglist
+            .map(item => item.quantity + " " + item.name)
+            .filter(item => !deletedItems.includes(item))
         setList(prev => [...new Set([...prev, ...newItems])])
     }, [setList, shoppinglist])
+
+    const handleDelete = (item: string) => {
+        setList(prev => prev.filter(i => i !== item))
+        setDeletedItems(prev => [...prev, item])
+    }
 
     return (
         <div className="flex flex-col">
@@ -26,7 +34,7 @@ function ShoppingList({ shoppinglist }: ShoppingListProps) {
 
             <Input list={list} setList={setList}/>
 
-            <List list={list} setList={setList}/>
+            <List list={list} setList={setList} onDelete={handleDelete}/>
 
             {list.length !== 0 && (
                 <DeleteButtonList list={list} setList={setList} str={"indkøbsliste"}/>

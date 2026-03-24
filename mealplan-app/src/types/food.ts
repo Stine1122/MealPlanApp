@@ -5,6 +5,7 @@ export type FridgeProps = {
 export type ListProps = {
   list: string[]
   setList: React.Dispatch<React.SetStateAction<string[]>>
+  onDelete?: (item: string) => void
 }
 
 export type InputProps = {

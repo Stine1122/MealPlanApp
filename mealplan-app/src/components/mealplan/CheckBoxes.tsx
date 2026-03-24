@@ -16,16 +16,17 @@ function TheBox({ name, checked, onChange }: TheBoxProps) {
     )
 }
 
-const OPTIONS = ["Glutenfri", "Laktosefri", "Mælkefri", "Nøddefri", "Vegetarisk", "Vegansk"] as const
+const OPTIONS = ["Glutenfri", "Laktosefri", "Mælkefri", "Vegetarisk", "Vegansk"] as const
 
 function CheckBoxes({ allergies, setAllergies }: allergiesProps) {
-    const handleChange = (name: string, value: boolean) => {
-        setChecked((prev) => ({ ...prev, [name]: value }))
-    }
 
     const [checked, setChecked] = useState<Record<string, boolean>>(
         Object.fromEntries(OPTIONS.map((name) => [name, allergies.includes(name)]))
     )
+
+    const handleChange = (name: string, value: boolean) => {
+        setChecked((prev) => ({ ...prev, [name]: value }))
+    }
 
     useEffect(() => {
         setAllergies(
@@ -36,7 +37,7 @@ function CheckBoxes({ allergies, setAllergies }: allergiesProps) {
     }, [checked,setAllergies])
 
     return (
-        <div className="flex flex-row flex-wrap self-center text-center gap-3 bg-amber-50/50 rounded-3xl p-1">
+        <div className="flex flex-row flex-wrap self-center text-center items-center gap-3 bg-amber-50/50 rounded-3xl p-1">
             {OPTIONS.map((name) => (
                 <TheBox
                     key={name}

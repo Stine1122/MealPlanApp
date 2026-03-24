@@ -1,6 +1,19 @@
-import { type StepProps } from "../../types/mealplan"
+import { useState, useEffect } from 'react'
 
-function Loading({step} : StepProps) {
+function Loading() {
+    const [step, setStep] = useState(0)
+
+    useEffect(() => {
+        setStep(0)
+        const t1 = setTimeout(() => setStep(1), 5000)
+        const t2 = setTimeout(() => setStep(2), 10000)
+
+        return () => {
+            clearTimeout(t1)
+            clearTimeout(t2)
+        }
+    }, [])
+
     return (
         <span className="text-2xl font-headline text-center text-olive-800 mt-4">
             <p className={`${step === 0 ? "animate-pulse" : ""}`}>

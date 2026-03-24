@@ -15,10 +15,10 @@ export function EditValue({ setEditingItem, editValue, list, setList, item }: Ed
     setEditingItem(null)
 }
 
-function List({ list, setList }: ListProps) {
+function List({ list, setList, onDelete }: ListProps) {
     const [editingItem, setEditingItem] = useState<string | null>(null)
     const [editValue, setEditValue] = useState("")
-
+    
     return (
         <>
         {list.length > 0 && (
@@ -50,7 +50,7 @@ function List({ list, setList }: ListProps) {
                                 item={item}
                     />
 
-                    <DeleteButton list={list} setList={setList} item={item}/>
+                    <DeleteButton list={list} setList={setList} item={item} onDelete={onDelete}/>
 
                 </div>
             ))}
