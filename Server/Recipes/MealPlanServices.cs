@@ -33,7 +33,7 @@ public class MealPlanService
         return total > 0 ? $"{total} {unit}" : string.Join(" + ", quantities);
     }
 
-    public async Task<List<Recipe>> GenerateMealPlan(GenerateContentRequest request)
+    public async Task<MealPlan> GenerateMealPlan(GenerateContentRequest request)
     {
         var schema = RecipeSchema.Value;
 
@@ -58,7 +58,8 @@ public class MealPlanService
             json = json.Replace("```json", "").Replace("```", "").Trim();
         }
 
-        var recipes = JsonSerializer.Deserialize<List<Recipe>>(json ?? "[]") ?? [];
+        var mealPlan = JsonSerializer.Deserialize<MealPlan>(json ?? "{}") ?? new MealPlan { Recipes = [] };
+        var recipes = mealPlan.Recipes;
 
         var combinedShoppingList = recipes
             .SelectMany(r => r.ShoppingList)
@@ -73,7 +74,7 @@ public class MealPlanService
         if (recipes.Count > 0)
             recipes[0].ShoppingList = combinedShoppingList;
 
-        return recipes;
+        return mealPlan;
     }
 }
 

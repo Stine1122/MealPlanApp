@@ -15,6 +15,7 @@ public class Ingredient
     public List<RecipeIngredient> RecipeIngredients { get; set; } = [];
 }
 
+[NotMapped]
 public class IngredientDto
 {
     [JsonPropertyName("name")]
@@ -72,4 +73,14 @@ public class RecipeIngredient
     public Ingredient Ingredient { get; set; } = null!;
 
     public required string Quantity { get; set; }
+}
+
+[NotMapped]
+public class MealPlan
+{
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
+
+    [JsonPropertyName("recipes")]
+    public required List<Recipe> Recipes { get; set; }
 }

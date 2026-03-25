@@ -1,5 +1,5 @@
 import { type GenerateResponseProp, type LoadingProps } from "../../types/mealplan"
-import { type ResponseProps } from "../../types/mealplan"
+import { type ResponseProps, type MessageProps } from "../../types/mealplan"
 
 export function GenerateButtons({generate_response, loading} : GenerateResponseProp & LoadingProps) {
     return (
@@ -25,10 +25,10 @@ export function GenerateButtons({generate_response, loading} : GenerateResponseP
     )
 }
 
-export function DeleteButtonMealPlan({ setResponse } : ResponseProps) {
+export function DeleteButtonMealPlan({ setResponse, setMessage } : ResponseProps & MessageProps) {
     return (
-        <button className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-400 hover:bg-red-500 p-2 rounded-2xl"
-                onClick={() => {setResponse(null)}}>
+        <button className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-700/80 hover:bg-red-600 p-2 rounded-2xl"
+                onClick={() => {setResponse(null), setMessage("")}}>
             Ryd madplan
         </button>
     )

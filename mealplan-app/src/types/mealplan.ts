@@ -16,6 +16,11 @@ export type ResponseProps = {
     setResponse: React.Dispatch<React.SetStateAction<RecipeType[] | null>>
 }
 
+export type MessageProps = {
+    message: string
+    setMessage: React.Dispatch<React.SetStateAction<string>>
+}
+
 export type ErrorMessageProps = {
     error: string
     setError: React.Dispatch<React.SetStateAction<string>>

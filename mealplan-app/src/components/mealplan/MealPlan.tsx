@@ -16,6 +16,7 @@ function MealPlan() {
     const [num, setNum] = useLocalStorage<number | "">("number-people", "")
     const [allergies, setAllergies] = useLocalStorage<string[]>("allergy-names", [])
 
+    const [message, setMessage] = useLocalStorage<string>("message", "")
     const [response, setResponse] = useLocalStorage<RecipeType[] | null>("mealplan-recipe", null)
     const [visibleRecipes, setVisibleRecipes] = useState<RecipeType[]>(response ?? [])
 
@@ -29,6 +30,7 @@ function MealPlan() {
         }
         setError("")
         setLoading(true)
+        setMessage("")
         setResponse(null)
         setVisibleRecipes([])
 
@@ -58,10 +60,15 @@ function MealPlan() {
                 throw new Error(err)
             };
 
-            const recipes = await r.json()
+            const mealplan = await r.json()
+            const recipes = mealplan.recipes ?? []
+            const message = mealplan.message ?? ""
+
+            setMessage(message)
             setResponse(recipes)
             setInput("")
 
+            console.log(mealplan)
             console.log(recipes)
 
             recipes.forEach((recipe: RecipeType, index: number) => {
@@ -101,7 +108,11 @@ function MealPlan() {
                 <GenerateButtons generate_response={generate_response} loading={loading}/>
                 {error && (<ErrorMessage error={error} setError={setError}/>)}
                 {loading && (<Loading/>)}
-
+                {message && (
+                    <p className="bg-olive-500/40 text-center rounded-xl p-2 w-full mt-4 font-headline font-bold text-lg">
+                        {message}
+                    </p>
+                )}
                 {response !== null && (
                     <>
                     {visibleRecipes.map((recipe, index) => (
@@ -118,7 +129,7 @@ function MealPlan() {
                             }}
                         />
                     ))}
-                    <DeleteButtonMealPlan response={null} setResponse={setResponse}/>
+                    <DeleteButtonMealPlan response={null} setResponse={setResponse} message={message} setMessage={setMessage} />
                     </>
                 )}
             </div>

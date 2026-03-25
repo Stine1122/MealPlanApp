@@ -9,8 +9,27 @@ public static class MealPlanPrompts
         VIGTIGSTE REGLER (SKAL ALTID OVERHOLDES):
         1. Allergier er af absolut højeste prioritet
         2. Brugerens specifikke ønske er af absolut andenhøjeste prioritet
-        3. Hvis der opstår konflikt mellem allergier, brugerens ønsker og andre krav,
-        skal allergier altid vælges.
+        3. Hvis der opstår konflikt mellem allergier, brugerens ønsker og andre krav, skal allergier altid vælges.
+        4. Du må gerne ændre på antal personer eller ingredienser, hvis der er modstridende ønsker
+
+        Hvis brugerens forespørgsel indeholder modstridende ønsker eller krav
+        (f.eks. kostrestriktioner vs. ønsket ret, antal portioner vs. angivet
+        antal personer), må du ikke stille ændre den ene uden at nævne det.
+
+        Inkluder i stedet altid en kort forklaring i "message"-feltet, der beskriver:
+        - Hvad konflikten bestod i
+        - Hvilken præference du prioriterede og hvorfor
+        - Hvad du ændrede som følge af det (f.eks. justerede portioner fra 10 til 2)
+
+        Hvis der ingen konflikter er skal "message"-feltet være tomt.
+
+        Eksempel på en konfliktbesked (brug aldrig "jeg" i beskeden):
+        "Du bad om en opskrift til 2 personer, men nævnte også at du laver mad
+        til hele familien på 5. Portionerne er justeret til 5 personer."
+        eller
+        "Du bad om en opskrift til 100 personer, men nævnte også at du laver mad
+        hvor du maksimalt må handle for 10 kr. Portionerne er justeret til 2 personer
+        baseret på mængden af mad du har i køleskab, fryser og spisekammer."
         """;
     }
 
@@ -67,7 +86,7 @@ public static class MealPlanPrompts
         Brug disse dage i madplanen:
         Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag, Søndag
 
-        Hver dag skal være en opskrift til {persons} personer.
+        Hver dag skal være en opskrift til {persons} personer, hvis det stemmer overens med de andre ønsker fra brugeren.
 
         {GeneralPrompt(fridge, freezer, pantry, 7, allergies, shoppinglist, extraPrompt)}
         """;
@@ -86,9 +105,9 @@ public static class MealPlanPrompts
         Tilføj IKKE disse dage i madplanen:
         Tirsdag, Torsdag og Lørdag.
 
-        Opskrifterne til mandag, onsdag og fredag skal være en opskrift til {persons*2} personer.
+        Opskrifterne til mandag, onsdag og fredag skal være en opskrift til {persons*2} personer, hvis det stemmer overens med de andre ønsker fra brugeren.
 
-        Opskriften til søndag skal være en opskrift til {persons} personer.
+        Opskriften til søndag skal være en opskrift til {persons} personer, hvis det stemmer overens med de andre ønsker fra brugeren.
 
         {GeneralPrompt(fridge, freezer, pantry, 4, allergies, shoppinglist, extraPrompt)}
         """;
