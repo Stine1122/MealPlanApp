@@ -22,7 +22,7 @@ function List({ list, setList, onDelete }: ListProps) {
     return (
         <>
         {list.length > 0 && (
-        <ul className="text-2xl mt-5 list-none flex flex-col gap-2 bg-amber-50/30 p-3 rounded-2xl w-full self-center">
+        <ul className="text-2xl list-none flex flex-col gap-2 bg-amber-50/30 p-3 rounded-2xl w-full self-center overflow-y-auto h-full">
 
             {list.map((item) => (
                 <div className="flex flex-row w-full" key={item}>

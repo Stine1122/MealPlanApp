@@ -4,7 +4,7 @@ import { EditValue } from './List'
 
 export function DeleteButtonList({ list, setList, str, onDeleteList }: ListProps & { str: string }) {
     return (
-        <button className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-700/80 hover:bg-red-600 p-2 rounded-2xl mt-3"
+        <button className="font-headline self-center cursor-pointer text-amber-50/80 bg-red-700/80 hover:bg-red-600 p-2 rounded-2xl mb-5"
                 onClick={() => {onDeleteList ? onDeleteList(list) : setList([])}}>
             Ryd {str}
         </button>

@@ -7,6 +7,8 @@ import background from './pictures/background.jpg'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <img src={background} alt="Background" className="fixed top-0 left-0 w-full h-full object-cover -z-10 opacity-50"/>
-    <App />
+    <div className="h-screen overflow-hidden">
+      <App />
+    </div>
   </StrictMode>,
 )

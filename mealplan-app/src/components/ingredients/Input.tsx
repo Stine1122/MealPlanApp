@@ -41,10 +41,10 @@ function Input({ list, setList }: ListProps) {
     const [error, setError] = useState("")
 
     return (
-        <div className="flex flex-col w-full gap-3 self-center">
+        <div className="flex flex-col w-full self-center">
             <div className="flex flex-row w-full gap-3 self-center">
 
-                <input className={`bg-amber-50/90 p-2 border border-amber-50 rounded-2xl w-15 mt-5`}
+                <input className={`bg-amber-50/90 p-2 border border-amber-50 rounded-2xl w-15`}
                     type="number"
                     min={1}
                     value={num}
@@ -62,14 +62,14 @@ function Input({ list, setList }: ListProps) {
 
                 <DropdownInput opt={opt} setOpt={setOpt}/>
 
-                <input className="bg-amber-50/90 p-2 border border-amber-50 rounded-2xl self-center mt-5 w-full"
+                <input className="bg-amber-50/90 p-2 border border-amber-50 rounded-2xl self-center w-full"
                     placeholder="Tilføj ingrediens..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => {if (e.key === "Enter") {handleInput({input, setInput}, {list, setList}, num, opt, {error, setError})}}}
                 />
 
-                <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600 mt-5 text-amber-50/80 font-headline p-2 rounded-2xl w-1/6"
+                <button className="self-center cursor-pointer bg-olive-800 hover:bg-olive-600 text-amber-50/80 font-headline p-2 rounded-2xl w-1/6"
                     onClick={() => {handleInput({input, setInput}, {list, setList}, num, opt, {error, setError})}}>
                     Tilføj
                 </button>

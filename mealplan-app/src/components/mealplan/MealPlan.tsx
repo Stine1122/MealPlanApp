@@ -92,54 +92,64 @@ function MealPlan() {
     )
 
     return (
-        <>
-        <div className="overflow-auto flex flex-col w-1/2 items-center">
+        <div className="flex flex-row flex-1 h-full overflow-hidden">
 
-            <div className="flex flex-row self-center text-center gap-3">
-                <img src={burger} className="self-center h-15 w-15 transition-transform mt-7"/>
-                <h1 className="text-center text-5xl mt-10 font-headline text-brown-900"> Din ugentlige madplan</h1>
-                <img src={ramen} className="self-center h-15 w-15 transition-transform mt-7"/>
-            </div>
+            <div className="flex flex-col w-2/3 h-full overflow-hidden items-center">
 
-            <div className="rounded p-3 flex flex-col gap-3 self-center m-3 w-11/12 items-center">
+                <div className="flex flex-row self-center text-center gap-3 shrink-0">
+                    <img src={burger} className="self-center h-15 w-15 transition-transform mt-7"/>
+                    <h1 className="text-center text-5xl mt-10 font-headline text-brown-900">Din ugentlige madplan</h1>
+                    <img src={ramen} className="self-center h-15 w-15 transition-transform mt-7"/>
+                </div>
 
-                <Input num={num} setNum={setNum} input={input} setInput={setInput}/>
-                <CheckBoxes allergies={allergies} setAllergies={setAllergies}/>
-                <GenerateButtons generate_response={generate_response} loading={loading}/>
-                {error && (<ErrorMessage error={error} setError={setError}/>)}
-                {loading && (<Loading/>)}
-                {message && (
-                    <p className="bg-olive-500/40 text-center rounded-xl p-2 w-full mt-4 font-headline font-bold text-lg">
-                        {message}
-                    </p>
-                )}
+                <div className="rounded p-3 flex flex-col gap-3 self-center w-11/12 items-center shrink-0">
+                    <Input num={num} setNum={setNum} input={input} setInput={setInput}/>
+                    <CheckBoxes allergies={allergies} setAllergies={setAllergies}/>
+                    <GenerateButtons generate_response={generate_response} loading={loading}/>
+                    {error && (<ErrorMessage error={error} setError={setError}/>)}
+                    {loading && (<Loading/>)}
+                </div>
+
+                <div className="flex flex-col flex-1 min-h-0 overflow-y-auto w-11/12 gap-3 pt-2">
+                    <div className="flex flex-col gap-3 pr-5 pl-5 self-center">
+                        {message && (
+                            <p className="bg-olive-500/40 text-center rounded-xl p-2 w-full font-headline font-bold text-lg">
+                                {message}
+                            </p>
+                        )}
+                        {response !== null && (
+                            visibleRecipes.map((recipe, index) => (
+                                <Recipe
+                                    key={index}
+                                    response={recipe}
+                                    onSaved={(id) => {
+                                        setResponse(prev => prev?.map((r, i) =>
+                                            i === index ? { ...r, savedId: id } : r
+                                        ) ?? null)
+                                        setVisibleRecipes(prev => prev.map((r, i) =>
+                                            i === index ? { ...r, savedId: id } : r
+                                        ))
+                                    }}
+                                />
+                            ))
+                        )}
+                    </div>
+                </div>
+
                 {response !== null && (
-                    <>
-                    {visibleRecipes.map((recipe, index) => (
-                        <Recipe 
-                            key={index} 
-                            response={recipe} 
-                            onSaved={(id) => {
-                                setResponse(prev => prev?.map((r, i) => 
-                                    i === index ? { ...r, savedId: id } : r
-                                ) ?? null)
-                                setVisibleRecipes(prev => prev.map((r, i) => 
-                                    i === index ? { ...r, savedId: id } : r
-                                ))
-                            }}
-                        />
-                    ))}
-                    <DeleteButtonMealPlan response={null} setResponse={setResponse} message={message} setMessage={setMessage} />
-                    </>
+                    <div className="shrink-0 mt-auto pt-2 pb-12 w-11/12 self-center flex justify-center">
+                        <DeleteButtonMealPlan response={null} setResponse={setResponse} message={message} setMessage={setMessage}/>
+                    </div>
                 )}
+
+            </div>
+
+            {/* Shopping list column */}
+            <div className="flex flex-col w-1/3 h-full overflow-hidden pb-20 mt-13">
+                <ShoppingList shoppinglist={allShoppingItems}/>
             </div>
 
         </div>
-
-        <div className="overflow-auto flex flex-col w-1/4 mb-15 mt-13 gap-10">
-            <ShoppingList shoppinglist={allShoppingItems}/>
-        </div>
-        </>
     )
 }
 

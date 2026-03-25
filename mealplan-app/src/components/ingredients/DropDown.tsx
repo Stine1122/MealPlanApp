@@ -15,7 +15,7 @@ function DropdownInput({ opt, setOpt}: OptionProps) {
   };
 
   return (
-      <div className={`bg-amber-50/90 p-2 border border-amber-50 rounded-2xl self-center mt-5 ${w1}`}>
+      <div className={`bg-amber-50/90 p-2 border border-amber-50 rounded-2xl self-center ${w1}`}>
 
         <label htmlFor="dropdown"></label>
 

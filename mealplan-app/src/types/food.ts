@@ -1,4 +1,4 @@
-export type FridgeProps = {
+export type InventoryProps = {
     type: "fridge" | "freezer" | "pantry"
 }
 
